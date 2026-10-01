@@ -15,6 +15,29 @@ export default function HeroSection() {
   const [isMuted, setIsMuted] = useState(false);
   const userManuallyMutedRef = useRef(false);
 
+  // Unmute function to enable audio with browser autoplay compliance
+  const unmuteAudio = () => {
+    if (userManuallyMutedRef.current || !videoRef.current) return;
+    videoRef.current.muted = false;
+    videoRef.current.volume = 1.0;
+    const playPromise = videoRef.current.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          setIsMuted(false);
+          setIsPlaying(true);
+        })
+        .catch(() => {
+          // If browser strictly requires user gesture, keep video playing and wait for first tap/click
+          if (videoRef.current && !userManuallyMutedRef.current) {
+            videoRef.current.muted = true;
+            videoRef.current.play().catch(() => {});
+            setIsMuted(true);
+          }
+        });
+    }
+  };
+
   useEffect(() => {
     if (typeof window === "undefined") return;
     document.body.style.overflow = "hidden";
@@ -24,14 +47,9 @@ export default function HeroSection() {
       onComplete: () => {
         setLoaderDone(true);
         document.body.style.overflow = "";
-        // Attempt unmuting again when intro finishes if user didn't manually mute
-        if (!userManuallyMutedRef.current && videoRef.current && videoRef.current.muted) {
-          videoRef.current.muted = false;
-          videoRef.current.volume = 1.0;
-          videoRef.current
-            .play()
-            .then(() => setIsMuted(false))
-            .catch(() => {});
+        // Unmute audio when loader completes
+        if (!userManuallyMutedRef.current && videoRef.current) {
+          unmuteAudio();
         }
       },
     });
@@ -42,60 +60,76 @@ export default function HeroSection() {
     const t1 = setTimeout(() => setCurrentText("वेंकटेश्वर पोर्टफोलियो"), 900);
     const t2 = setTimeout(() => setCurrentText("VENKATESWARLU PORTFOLIO"), 1800);
 
-    // Audio Autoplay Handling:
-    // Attempt unmuted audio playback by default
-    const startAudioByDefault = () => {
-      if (userManuallyMutedRef.current || !videoRef.current) return;
-      videoRef.current.muted = false;
-      videoRef.current.volume = 1.0;
-      videoRef.current
-        .play()
-        .then(() => {
-          setIsPlaying(true);
-          setIsMuted(false);
-        })
-        .catch(() => {
-          // If browser policy blocks unmuted autoplay without user gesture,
-          // play muted initially so the video doesn't freeze, and unmute on first gesture
-          if (videoRef.current && !userManuallyMutedRef.current) {
-            videoRef.current.muted = true;
-            videoRef.current
-              .play()
-              .then(() => setIsPlaying(true))
-              .catch(() => {});
-            setIsMuted(true);
-          }
-        });
-    };
-
-    startAudioByDefault();
-
-    // Listen for any user interaction (click, touch, key, scroll) to unmute immediately
-    const onUserInteraction = () => {
-      if (userManuallyMutedRef.current) return;
-      if (videoRef.current && videoRef.current.muted) {
-        videoRef.current.muted = false;
-        videoRef.current.volume = 1.0;
-        videoRef.current.play().catch(() => {});
+    // Sync play/pause state with HTML video element events
+    const video = videoRef.current;
+    if (video) {
+      video.muted = false;
+      video.volume = 1.0;
+      video.play().then(() => {
+        setIsPlaying(true);
         setIsMuted(false);
-      }
-      removeListeners();
-    };
+      }).catch(() => {
+        // Fallback to muted playback if browser restricts sound before gesture
+        if (video && !userManuallyMutedRef.current) {
+          video.muted = true;
+          video.play().then(() => setIsPlaying(true)).catch(() => {});
+          setIsMuted(true);
+        }
+      });
 
-    const events = ["click", "touchstart", "pointerdown", "keydown", "scroll", "wheel"];
-    const removeListeners = () => {
-      events.forEach((evt) => window.removeEventListener(evt, onUserInteraction));
-    };
-    events.forEach((evt) => window.addEventListener(evt, onUserInteraction, { once: true, passive: true }));
+      const handlePlay = () => setIsPlaying(true);
+      const handlePause = () => setIsPlaying(false);
+      const handleEnded = () => {
+        video.currentTime = 0;
+        video.play().catch(() => {});
+      };
+      video.addEventListener("play", handlePlay);
+      video.addEventListener("pause", handlePause);
+      video.addEventListener("ended", handleEnded);
+
+      // Listen for any user gesture anywhere to immediately unmute
+      const handleFirstInteraction = () => {
+        if (userManuallyMutedRef.current) return;
+        if (videoRef.current) {
+          videoRef.current.muted = false;
+          videoRef.current.volume = 1.0;
+          videoRef.current.play().catch(() => {});
+          setIsMuted(false);
+        }
+        removeInteractionListeners();
+      };
+
+      const interactionEvents = ["click", "touchstart", "pointerdown", "keydown", "wheel", "scroll"];
+      const removeInteractionListeners = () => {
+        interactionEvents.forEach((evt) => window.removeEventListener(evt, handleFirstInteraction));
+      };
+      interactionEvents.forEach((evt) =>
+        window.addEventListener(evt, handleFirstInteraction, { once: true, passive: true })
+      );
+
+      return () => {
+        tl.kill();
+        clearTimeout(t1);
+        clearTimeout(t2);
+        video.removeEventListener("play", handlePlay);
+        video.removeEventListener("pause", handlePause);
+        video.removeEventListener("ended", handleEnded);
+        removeInteractionListeners();
+        document.body.style.overflow = "";
+      };
+    }
 
     return () => {
       tl.kill();
       clearTimeout(t1);
       clearTimeout(t2);
-      removeListeners();
       document.body.style.overflow = "";
     };
   }, []);
+
+  const handleLoaderClick = () => {
+    unmuteAudio();
+  };
 
   const handleScrollToWork = (e) => {
     e.preventDefault();
@@ -110,14 +144,10 @@ export default function HeroSection() {
 
   const togglePlay = () => {
     if (!videoRef.current) return;
-    if (isPlaying) {
-      videoRef.current.pause();
-      setIsPlaying(false);
+    if (videoRef.current.paused) {
+      videoRef.current.play().catch(() => {});
     } else {
-      videoRef.current
-        .play()
-        .then(() => setIsPlaying(true))
-        .catch((err) => console.log("Video playback error:", err));
+      videoRef.current.pause();
     }
   };
 
@@ -144,6 +174,7 @@ export default function HeroSection() {
       <div
         id="loader"
         ref={loaderRef}
+        onClick={handleLoaderClick}
         style={{
           background: "linear-gradient(115deg, #c0c1c4 0%, #b0b1b5 30%, #9e9fa3 55%, #8f9092 100%)",
           zIndex: 100002,
@@ -151,6 +182,7 @@ export default function HeroSection() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
+          cursor: "pointer",
         }}
       >
         <motion.div
@@ -176,6 +208,13 @@ export default function HeroSection() {
               {currentText}
             </motion.div>
           </div>
+          <div className="mt-4 px-3.5 py-1.5 rounded-full bg-black/25 text-fg text-xs font-semibold flex items-center gap-2 border border-theme-border/50 animate-pulse">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
+            </svg>
+            <span>Tap anywhere to start with sound</span>
+          </div>
         </motion.div>
       </div>
 
@@ -188,9 +227,10 @@ export default function HeroSection() {
             src="/hero-bg-video.mp4"
             autoPlay
             loop
+            muted
             playsInline
             preload="auto"
-            className="w-full h-full object-cover object-center opacity-85 transition-opacity duration-700"
+            className="w-full h-full object-cover object-center opacity-85 transition-opacity duration-700 pointer-events-none"
           />
           {/* Subtle Ambient Side Gradient & Crisp Bottom Seam without Milky Blur */}
           <div className="absolute inset-0 bg-gradient-to-r from-[#c0c1c4]/75 via-transparent to-[#8f9092]/25 pointer-events-none" />
@@ -257,14 +297,14 @@ export default function HeroSection() {
           </div>
         </motion.div>
 
-        {/* Floating Sound & Video Controls */}
-        <div className="absolute bottom-8 right-6 sm:right-10 z-20 flex items-center gap-3">
+        {/* Floating Sound & Video Controls - positioned directly over bottom-right logo */}
+        <div className="absolute bottom-11 sm:bottom-14 right-5 sm:right-8 z-20 flex items-center gap-2 p-1.5 sm:p-2 rounded-full bg-[#121619]/92 backdrop-blur-2xl border border-white/20 shadow-[0_12px_40px_rgba(0,0,0,0.65)]">
           {/* Sound Toggle Button */}
           <button
             type="button"
             onClick={toggleSound}
             aria-label={isMuted ? "Unmute video audio" : "Mute video audio"}
-            className={`flex items-center gap-2.5 px-4 py-2.5 rounded-full text-xs font-semibold tracking-wider transition-all shadow-xl active:scale-95 cursor-pointer backdrop-blur-md border ${
+            className={`flex items-center gap-2 px-3.5 py-2 rounded-full text-xs font-semibold tracking-wider transition-all shadow-md active:scale-95 cursor-pointer backdrop-blur-md border ${
               isMuted
                 ? "bg-bg-alt/90 border-theme-border text-fg hover:bg-accent hover:text-fg"
                 : "bg-[#18392b] border-emerald-500/50 text-[#86efac]"
@@ -272,7 +312,7 @@ export default function HeroSection() {
           >
             {isMuted ? (
               <>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
                   <line x1="23" y1="9" x2="17" y2="15" />
                   <line x1="17" y1="9" x2="23" y2="15" />
@@ -281,12 +321,12 @@ export default function HeroSection() {
               </>
             ) : (
               <>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
                   <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
                 </svg>
                 <span>MUTE AUDIO</span>
-                <span className="flex items-center gap-0.5 ml-1">
+                <span className="flex items-center gap-0.5 ml-0.5">
                   <span className="w-1 h-3 bg-current rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
                   <span className="w-1 h-4 bg-current rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
                   <span className="w-1 h-2 bg-current rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
@@ -300,11 +340,24 @@ export default function HeroSection() {
             type="button"
             onClick={togglePlay}
             aria-label={isPlaying ? "Pause background video" : "Play background video"}
-            className="flex items-center gap-2 bg-bg-alt/90 border border-theme-border px-3.5 py-2.5 rounded-full text-fg hover:bg-accent hover:text-fg transition-all active:scale-95 shadow-lg cursor-pointer backdrop-blur-md"
+            className="flex items-center gap-1.5 bg-bg-alt/90 border border-theme-border px-3.5 py-2 rounded-full text-fg hover:bg-accent hover:text-fg transition-all active:scale-95 shadow-md cursor-pointer backdrop-blur-md"
           >
-            <span className="text-[11px] font-bold tracking-[0.15em] uppercase">
-              {isPlaying ? "PAUSE" : "PLAY"}
-            </span>
+            {isPlaying ? (
+              <>
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                  <rect x="6" y="4" width="4" height="16" rx="1" />
+                  <rect x="14" y="4" width="4" height="16" rx="1" />
+                </svg>
+                <span className="text-[11px] font-bold tracking-[0.15em] uppercase">PAUSE</span>
+              </>
+            ) : (
+              <>
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                  <polygon points="6 4 20 12 6 20 6 4" />
+                </svg>
+                <span className="text-[11px] font-bold tracking-[0.15em] uppercase">PLAY</span>
+              </>
+            )}
           </button>
         </div>
       </section>
