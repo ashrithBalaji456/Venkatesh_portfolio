@@ -1,7 +1,5 @@
 "use client";
-import React, { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import React, { useRef } from "react";
 
 const PROJECTS = [
   {
@@ -42,32 +40,6 @@ const PROJECTS = [
 
 export default function Projects() {
   const sectionRef = useRef(null);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    gsap.registerPlugin(ScrollTrigger);
-
-    const section = sectionRef.current;
-    if (!section) return;
-
-    const cards = section.querySelectorAll(".project-card");
-    const ctx = gsap.context(() => {
-      gsap.from(cards, {
-        opacity: 0,
-        y: 40,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: section,
-          start: "top 80%",
-          once: true,
-        },
-      });
-    }, section);
-
-    return () => ctx.revert();
-  }, []);
 
   return (
     <section
