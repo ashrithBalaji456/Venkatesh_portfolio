@@ -14,28 +14,34 @@ export default function Skiggle() {
     const path = pathRef.current;
     const length = path.getTotalLength();
 
-    // Prepare stroke dash properties
+    // Set stroke dasharray to exact length
     path.style.strokeDasharray = `${length}`;
+    // Start 100% hidden so NOTHING is pre-drawn before scrolling
     path.style.strokeDashoffset = `${length}`;
 
-    // Show initial 15% peeking into the hero-to-about section transition
-    const startOffset = length * 0.86;
-    gsap.set(path, { strokeDashoffset: startOffset });
+    const triggerElem = document.getElementById("experience-flow");
+    if (!triggerElem) return;
 
-    // Target the shared experience-flow container spanning About, Projects & Education
-    const triggerElem = document.getElementById("experience-flow") || svgRef.current;
+    // Dynamically draw the ribbon strictly as the user scrolls
+    const tween = gsap.fromTo(
+      path,
+      { strokeDashoffset: length },
+      {
+        strokeDashoffset: 0,
+        ease: "none",
+        scrollTrigger: {
+          trigger: triggerElem,
+          start: "top 65%",
+          end: "bottom 35%",
+          scrub: 1.2,
+          invalidateOnRefresh: true,
+        },
+      }
+    );
 
-    const tween = gsap.to(path, {
-      strokeDashoffset: 0,
-      ease: "none",
-      scrollTrigger: {
-        trigger: triggerElem,
-        start: "top 85%",
-        end: "bottom 75%",
-        scrub: 1.2,
-        invalidateOnRefresh: true,
-      },
-    });
+    // Refresh after layout and images settle
+    const t1 = setTimeout(() => ScrollTrigger.refresh(), 300);
+    const t2 = setTimeout(() => ScrollTrigger.refresh(), 1000);
 
     const handleResize = () => {
       ScrollTrigger.refresh();
@@ -43,6 +49,8 @@ export default function Skiggle() {
     window.addEventListener("resize", handleResize);
 
     return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
       window.removeEventListener("resize", handleResize);
       tween.scrollTrigger?.kill();
       tween.kill();
@@ -53,14 +61,14 @@ export default function Skiggle() {
     <svg
       ref={svgRef}
       className="squigggle absolute top-0 left-1/2 -translate-x-1/2 w-[125vw] max-w-[1920px] h-full z-0 pointer-events-none opacity-85"
-      viewBox="-200 0 1950 3500"
+      viewBox="-200 0 1950 3550"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       preserveAspectRatio="xMidYMin slice"
     >
       <path
         ref={pathRef}
-        d="M -150 40 C -50 180, 80 80, 100 80 C 250 -40, 710 160, 680 540 C 650 920, 390 970, 260 990 C 100 1010, 60 910, 60 860 C 70 790, 150 670, 370 800 C 640 960, 640 1170, 830 1140 C 1010 1110, 970 910, 1150 940 C 1320 980, 1300 1280, 1420 1290 C 1510 1300, 1570 1010, 1600 1060 C 1620 1180, 1480 1320, 1280 1380 C 1080 1440, 720 1360, 520 1480 C 320 1600, 180 1780, 160 1960 C 140 2140, 340 2260, 600 2220 C 860 2180, 1140 2060, 1320 2160 C 1500 2260, 1620 2360, 1540 2480 C 1460 2600, 1180 2720, 880 2760 C 580 2800, 320 2740, 240 2880 C 160 3020, 260 3160, 480 3220 C 700 3280, 1020 3180, 1260 3260 C 1440 3320, 1580 3390, 1720 3450"
+        d="M -120 60 C -20 180, 120 70, 180 80 C 340 100, 720 180, 680 520 C 640 860, 380 940, 240 960 C 80 980, 40 880, 60 820 C 80 740, 200 660, 420 790 C 680 940, 700 1140, 900 1110 C 1080 1080, 1020 900, 1200 930 C 1360 960, 1380 1240, 1480 1260 C 1580 1280, 1640 1040, 1680 1120 C 1720 1220, 1540 1360, 1320 1420 C 1100 1480, 760 1400, 540 1520 C 320 1640, 140 1820, 120 2000 C 100 2180, 280 2300, 540 2260 C 800 2220, 1080 2100, 1280 2200 C 1480 2300, 1600 2400, 1540 2520 C 1480 2640, 1220 2740, 920 2780 C 620 2820, 340 2740, 180 2860 C 40 2960, 30 3100, 120 3220 C 220 3340, 560 3380, 880 3360 C 1200 3340, 1480 3420, 1680 3520"
         stroke="url(#blue_ribbon_dynamic_grand)"
         strokeWidth="48"
         strokeLinecap="round"
@@ -73,9 +81,9 @@ export default function Skiggle() {
         <linearGradient
           id="blue_ribbon_dynamic_grand"
           x1="-100"
-          y1="40"
+          y1="60"
           x2="1700"
-          y2="3450"
+          y2="3520"
           gradientUnits="userSpaceOnUse"
         >
           <stop offset="0%" stopColor="#0016EC" />
