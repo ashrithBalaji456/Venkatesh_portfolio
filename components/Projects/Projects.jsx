@@ -3,12 +3,12 @@ import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-const PROJECT_CARDS = [
+const PROJECTS = [
   {
     id: "01",
     title: "Online Event Booking System – Backend",
     timeline: "Aug 2026 – Dec 2026",
-    category: "Distributed Backend & Booking Engine",
+    category: "High-Concurrency Booking Engine & REST Architecture",
     tech: [
       "Java",
       "Spring Boot",
@@ -25,17 +25,13 @@ const PROJECT_CARDS = [
       "Designed and managed MySQL database tables for users, events, and booking details using Spring Data JPA.",
       "Implemented ticket booking, booking history, and event availability features to improve the user experience."
     ],
-    highlights: [
-      { label: "Architecture", val: "Layered (Controller-Service-Repo)" },
-      { label: "Data Integrity", val: "Transactional Consistency" },
-      { label: "Status", val: "Production Architecture • Private System" }
-    ]
+    badge: "Enterprise Architecture • Private Production Codebase"
   },
   {
     id: "02",
     title: "Hospital Management System – Backend",
     timeline: "Jan 2026 – Mar 2026",
-    category: "Healthcare Operations & Records Platform",
+    category: "Clinical Data Platform & Healthcare Operations",
     tech: [
       "Java",
       "Spring Boot",
@@ -52,61 +48,7 @@ const PROJECT_CARDS = [
       "Designed and managed MySQL database tables for patients, doctors, appointments, and medical records using Spring Data JPA.",
       "Implemented patient record management, appointment tracking, and billing features to improve hospital operations."
     ],
-    highlights: [
-      { label: "Modules", val: "Patient, Doctor, Appointment & Billing" },
-      { label: "Security & ORM", val: "Hibernate ORM & Spring Data" },
-      { label: "Status", val: "Production Architecture • Private System" }
-    ]
-  },
-  {
-    id: "03",
-    title: "Salesforce CRM Integration Engine",
-    timeline: "Enterprise System",
-    category: "Enterprise Cloud & REST Integrations",
-    tech: [
-      "Salesforce Certified",
-      "Spring Boot",
-      "RESTful APIs",
-      "Webhook Handlers",
-      "OAuth 2.0",
-      "Postman"
-    ],
-    image: null,
-    bullets: [
-      "Automated enterprise business workflows and seamless bidirectional data sync between internal databases and Salesforce CRM.",
-      "Engineered secure, rate-limited REST integration endpoints for real-time customer and lead data ingestion.",
-      "Built resilient error recovery pipelines, automated payload validation, and comprehensive audit logs for mission-critical operations."
-    ],
-    highlights: [
-      { label: "Certification", val: "Salesforce Certified Developer" },
-      { label: "API Standard", val: "Enterprise REST & Webhooks" },
-      { label: "Status", val: "Enterprise Architecture • Private System" }
-    ]
-  },
-  {
-    id: "04",
-    title: "Production Layered CRUD & API Test Suite",
-    timeline: "Core Backend Standard",
-    category: "Standardized Framework & Tooling",
-    tech: [
-      "Spring Boot",
-      "Controller-Service-Repo",
-      "Postman",
-      "Maven",
-      "JUnit 5",
-      "Global Exception Handling"
-    ],
-    image: null,
-    bullets: [
-      "Architected clean, decoupled Layered Architecture featuring DTO mappers, standardized JSON response structures, and centralized @ControllerAdvice error handling.",
-      "Configured automated Postman test suites and CI-friendly Maven build lifecycles for repeatable endpoint regression testing.",
-      "Enforced strict relational schema modeling, foreign key cascades, and high-efficiency indexed JPA query execution."
-    ],
-    highlights: [
-      { label: "Pattern", val: "Controller-Service-Repository" },
-      { label: "Testing", val: "Automated Postman & JUnit" },
-      { label: "Status", val: "Backend Framework • Private System" }
-    ]
+    badge: "Enterprise Architecture • Private Production Codebase"
   }
 ];
 
@@ -124,23 +66,18 @@ export default function Projects() {
     if (!section || !track) return;
 
     const ctx = gsap.context(() => {
-      const getScrollDistance = () => {
-        // Distance needed to scroll all cards completely into view
-        const trackWidth = track.scrollWidth;
-        const windowWidth = window.innerWidth;
-        return Math.max(trackWidth - windowWidth + 120, 0);
+      const getDist = () => {
+        return Math.max(track.scrollWidth - window.innerWidth + 140, 300);
       };
 
-      const dist = getScrollDistance();
-
-      // Pin the section and animate track moving horizontally to the LEFT on scroll down
-      const tween = gsap.to(track, {
-        x: () => -dist,
+      // Pin the section and glide the 2 project cards horizontally to the LEFT on scroll
+      gsap.to(track, {
+        x: () => -getDist(),
         ease: "none",
         scrollTrigger: {
           trigger: section,
           start: "top top",
-          end: () => `+=${Math.max(dist * 1.15, window.innerHeight * 1.5)}`,
+          end: () => `+=${Math.max(getDist() * 1.35, window.innerHeight * 1.3)}`,
           pin: true,
           pinSpacing: true,
           scrub: 0.8,
@@ -149,7 +86,7 @@ export default function Projects() {
         },
       });
 
-      // Move heading smoothly left as you scroll down
+      // Heading glides smoothly to the left on scroll
       if (titleRef.current) {
         gsap.to(titleRef.current, {
           x: -60,
@@ -157,7 +94,7 @@ export default function Projects() {
           scrollTrigger: {
             trigger: section,
             start: "top top",
-            end: () => `+=${Math.max(dist * 1.15, window.innerHeight * 1.5)}`,
+            end: () => `+=${Math.max(getDist() * 1.35, window.innerHeight * 1.3)}`,
             scrub: 0.8,
           },
         });
@@ -171,13 +108,13 @@ export default function Projects() {
     <section
       id="projects-section"
       ref={sectionRef}
-      className="relative w-full h-screen min-h-[680px] overflow-hidden select-none flex flex-col justify-between py-6 sm:py-10 bg-transparent"
+      className="relative w-full h-screen min-h-[700px] overflow-hidden select-none flex flex-col justify-between py-6 sm:py-8 bg-transparent"
     >
       {/* Section Header */}
-      <div className="w-full px-6 sm:px-12 lg:px-20 flex items-end justify-between border-b border-theme-border/60 pb-4 flex-shrink-0">
-        <div className="flex flex-col gap-1">
+      <div className="w-full px-6 sm:px-12 lg:px-20 flex items-end justify-between border-b border-theme-border/60 pb-3 flex-shrink-0">
+        <div className="flex flex-col gap-0.5">
           <span className="text-xs sm:text-sm font-bold tracking-[0.25em] uppercase text-fg-muted">
-            PROJECTS &amp; SYSTEMS
+            PROJECTS
           </span>
           <h2
             ref={titleRef}
@@ -187,52 +124,56 @@ export default function Projects() {
           </h2>
         </div>
         <div className="hidden sm:flex items-center gap-2 text-xs font-semibold tracking-wider text-fg-muted uppercase">
-          <span>Scroll to explore</span>
+          <span>Scroll to explore projects</span>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>
         </div>
       </div>
 
-      {/* Horizontal Cards Track */}
+      {/* Horizontal Curved Glass Cards Track */}
       <div className="w-full flex-grow flex items-center overflow-hidden my-auto py-2">
         <div
           ref={trackRef}
-          className="flex items-center gap-6 sm:gap-10 pl-6 sm:pl-12 lg:pl-20 pr-16 sm:pr-32 will-change-transform"
+          className="flex items-center gap-8 sm:gap-12 pl-6 sm:pl-14 lg:pl-20 pr-16 sm:pr-32 will-change-transform"
           style={{ width: "max-content" }}
         >
-          {PROJECT_CARDS.map((proj) => (
+          {PROJECTS.map((proj) => (
             <article
               key={proj.id}
-              className="w-[86vw] sm:w-[560px] lg:w-[620px] xl:w-[660px] h-[520px] sm:h-[540px] max-h-[72vh] flex-shrink-0 bg-bg-alt/90 backdrop-blur-md border border-theme-border/80 rounded-3xl p-6 sm:p-8 flex flex-col justify-between shadow-2xl hover:border-accent transition-all duration-300"
+              className="glass-card w-[88vw] sm:w-[620px] lg:w-[700px] xl:w-[740px] max-h-[76vh] flex-shrink-0 p-6 sm:p-9 flex flex-col justify-between relative overflow-hidden"
             >
-              {/* Card Top: Number, Title, Timeline */}
-              <div className="flex flex-col gap-3">
-                <div className="flex items-center justify-between">
+              {/* Soft ambient glass specular sheen */}
+              <div className="absolute -top-24 -right-24 w-60 h-60 bg-white/30 rounded-full blur-3xl pointer-events-none" />
+              <div className="absolute -bottom-24 -left-24 w-60 h-60 bg-white/20 rounded-full blur-3xl pointer-events-none" />
+
+              {/* Card Top: Number, Category, Timeline */}
+              <div className="flex flex-col gap-3 relative z-10">
+                <div className="flex items-center justify-between flex-wrap gap-2">
                   <div className="flex items-center gap-2">
-                    <span className="font-mono text-sm sm:text-base font-bold text-accent">
+                    <span className="font-mono text-base sm:text-lg font-extrabold text-accent">
                       {proj.id}
                     </span>
                     <span className="w-1.5 h-1.5 rounded-full bg-accent" />
-                    <span className="text-xs font-bold uppercase tracking-widest text-fg-muted">
+                    <span className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#242732]">
                       {proj.category}
                     </span>
                   </div>
-                  <span className="font-mono text-[11px] sm:text-xs font-semibold px-3 py-1 rounded-full bg-btn-dark-bg text-btn-dark-text border border-theme-border">
+                  <span className="glass-pill px-3.5 py-1 text-[11px] sm:text-xs font-mono font-bold text-[#111317] rounded-full">
                     {proj.timeline}
                   </span>
                 </div>
 
-                <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-fg leading-snug">
+                <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#111317] leading-tight">
                   {proj.title}
                 </h3>
 
-                {/* Tech Pills */}
-                <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                {/* Glass Tech Pills */}
+                <div className="flex flex-wrap gap-1.5 sm:gap-2 pt-1">
                   {proj.tech.map((t) => (
                     <span
                       key={t}
-                      className="text-[11px] sm:text-xs font-semibold px-2.5 py-0.5 rounded-md bg-bg/85 border border-theme-border text-fg shadow-sm"
+                      className="glass-pill px-3 py-0.5 text-xs font-semibold text-[#111317] rounded-full"
                     >
                       {t}
                     </span>
@@ -240,36 +181,36 @@ export default function Projects() {
                 </div>
               </div>
 
-              {/* Optional Preview Image Banner */}
+              {/* Preview Image Banner */}
               {proj.image && (
-                <div className="w-full h-24 sm:h-28 rounded-xl overflow-hidden border border-theme-border my-2 flex-shrink-0 bg-bg/60">
+                <div className="w-full h-36 sm:h-44 rounded-2xl overflow-hidden border border-white/60 my-3 flex-shrink-0 shadow-md bg-black/5 relative z-10">
                   <img
                     src={proj.image}
                     alt={proj.title}
-                    className="w-full h-full object-cover object-center"
+                    className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
                   />
                 </div>
               )}
 
-              {/* Card Body: Resume Bullet Points */}
-              <ul className="flex flex-col gap-2 my-2 overflow-y-auto pr-1">
-                {proj.bullets.map((b, idx) => (
+              {/* Resume Bullet Points (No inner scrollbar, clear legible text) */}
+              <ul className="flex flex-col gap-2 sm:gap-2.5 my-2 relative z-10">
+                {proj.bullets.map((bullet, idx) => (
                   <li key={idx} className="flex items-start gap-2.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2 flex-shrink-0" />
-                    <p className="text-xs sm:text-[13.5px] leading-relaxed text-fg font-medium">
-                      {b}
+                    <span className="w-2 h-2 rounded-full bg-accent mt-1.5 flex-shrink-0 shadow-sm" />
+                    <p className="text-xs sm:text-sm lg:text-[14px] leading-relaxed text-[#161820] font-medium">
+                      {bullet}
                     </p>
                   </li>
                 ))}
               </ul>
 
-              {/* Card Footer: Architecture & Status (No broken repo links) */}
-              <div className="pt-3 border-t border-theme-border/60 flex items-center justify-between flex-wrap gap-2 text-[11px] sm:text-xs font-semibold text-fg-muted">
-                <div className="flex items-center gap-1.5">
+              {/* Card Footer: Enterprise Status (No broken repo links) */}
+              <div className="pt-3 border-t border-white/40 flex items-center justify-between flex-wrap gap-2 text-xs font-semibold text-[#282c38] relative z-10">
+                <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  <span className="text-fg font-semibold">Enterprise Architecture</span>
+                  <span className="text-[#111317] font-bold">Enterprise Architecture Verified</span>
                 </div>
-                <span className="font-mono text-fg-muted">
+                <span className="font-mono text-[#282c38]">
                   Private Production Codebase
                 </span>
               </div>
@@ -280,8 +221,8 @@ export default function Projects() {
 
       {/* Section Bottom Indicator */}
       <div className="w-full px-6 sm:px-12 lg:px-20 flex items-center justify-between text-xs text-fg-muted font-medium flex-shrink-0">
-        <span>04 Engineered Systems &amp; Architectures</span>
-        <span className="font-mono text-[11px]">Next: Contact &amp; Opportunities ↓</span>
+        <span>02 Production Projects (Online Event Booking &amp; Hospital Management)</span>
+        <span className="font-mono text-[11px]">Scroll down for Contact ↓</span>
       </div>
     </section>
   );
