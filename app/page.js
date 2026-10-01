@@ -3,7 +3,6 @@ import { Suspense, useRef } from "react";
 import Navbar from "@/components/Navbar/Navbar";
 import HeroSection from "@/components/HeroSection/HeroSection";
 import SmoothScroll from "@/components/SmoothScroll";
-import HorizontalScroll from "@/components/HorizontalScroll/HorizontalScroll";
 import Projects from "@/components/Projects/Projects";
 import Contact from "@/components/Contact/Contact";
 import SiteFooter from "@/components/SiteFooter/SiteFooter";
@@ -46,7 +45,6 @@ export default function Home() {
           </div>
 
           <Projects />
-          <HorizontalScroll />
           <Contact />
           <SiteFooter />
         </div>

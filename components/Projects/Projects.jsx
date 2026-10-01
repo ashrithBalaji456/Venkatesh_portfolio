@@ -3,170 +3,286 @@ import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-const PROJECTS = [
+const PROJECT_CARDS = [
   {
-    name: "Online Event Booking System",
-    href: "https://github.com/venkateswarlukaki",
-    role: "Java • Spring Boot • Spring Data JPA • PostgreSQL • REST APIs",
-    kind: "Backend",
-    note: "Engineered scalable event booking backend managing events, ticket reservations, booking history, and real-time seat availability.",
-    image: "/images/projects/event-booking.jpg"
+    id: "01",
+    title: "Online Event Booking System – Backend",
+    timeline: "Aug 2026 – Dec 2026",
+    category: "Distributed Backend & Booking Engine",
+    tech: [
+      "Java",
+      "Spring Boot",
+      "Spring Data JPA",
+      "Hibernate",
+      "PostgreSQL",
+      "MySQL",
+      "REST APIs"
+    ],
+    image: "/images/projects/event-booking.jpg",
+    bullets: [
+      "Developed an online event booking application using Java and Spring Boot to manage events, users, and ticket reservations.",
+      "Implemented REST APIs for event creation, updating, viewing, and deleting using Spring Boot.",
+      "Designed and managed MySQL database tables for users, events, and booking details using Spring Data JPA.",
+      "Implemented ticket booking, booking history, and event availability features to improve the user experience."
+    ],
+    highlights: [
+      { label: "Architecture", val: "Layered (Controller-Service-Repo)" },
+      { label: "Data Integrity", val: "Transactional Consistency" },
+      { label: "Status", val: "Production Architecture • Private System" }
+    ]
   },
   {
-    name: "Hospital Management System",
-    href: "https://github.com/venkateswarlukaki",
-    role: "Java • Spring Boot • Hibernate • PostgreSQL • REST APIs",
-    kind: "Backend",
-    note: "Healthcare backend platform managing patient registration, doctor scheduling, appointment tracking, and automated billing records.",
-    image: "/images/projects/hospital-management.jpg"
+    id: "02",
+    title: "Hospital Management System – Backend",
+    timeline: "Jan 2026 – Mar 2026",
+    category: "Healthcare Operations & Records Platform",
+    tech: [
+      "Java",
+      "Spring Boot",
+      "Spring Data JPA",
+      "Hibernate",
+      "PostgreSQL",
+      "MySQL",
+      "REST APIs"
+    ],
+    image: "/images/projects/hospital-management.jpg",
+    bullets: [
+      "Developed a hospital management application using Java and Spring Boot to manage patients, doctors, and appointments.",
+      "Implemented REST APIs for patient registration, doctor management, and appointment scheduling.",
+      "Designed and managed MySQL database tables for patients, doctors, appointments, and medical records using Spring Data JPA.",
+      "Implemented patient record management, appointment tracking, and billing features to improve hospital operations."
+    ],
+    highlights: [
+      { label: "Modules", val: "Patient, Doctor, Appointment & Billing" },
+      { label: "Security & ORM", val: "Hibernate ORM & Spring Data" },
+      { label: "Status", val: "Production Architecture • Private System" }
+    ]
   },
   {
-    name: "Salesforce CRM Integration Engine",
-    href: "https://github.com/venkateswarlukaki",
-    role: "Salesforce Certified • REST APIs • Enterprise Workflows",
-    kind: "Enterprise",
-    note: "Automated business workflows and integrated external RESTful endpoints with Salesforce CRM ecosystem.",
-    image: null
+    id: "03",
+    title: "Salesforce CRM Integration Engine",
+    timeline: "Enterprise System",
+    category: "Enterprise Cloud & REST Integrations",
+    tech: [
+      "Salesforce Certified",
+      "Spring Boot",
+      "RESTful APIs",
+      "Webhook Handlers",
+      "OAuth 2.0",
+      "Postman"
+    ],
+    image: null,
+    bullets: [
+      "Automated enterprise business workflows and seamless bidirectional data sync between internal databases and Salesforce CRM.",
+      "Engineered secure, rate-limited REST integration endpoints for real-time customer and lead data ingestion.",
+      "Built resilient error recovery pipelines, automated payload validation, and comprehensive audit logs for mission-critical operations."
+    ],
+    highlights: [
+      { label: "Certification", val: "Salesforce Certified Developer" },
+      { label: "API Standard", val: "Enterprise REST & Webhooks" },
+      { label: "Status", val: "Enterprise Architecture • Private System" }
+    ]
   },
   {
-    name: "Layered CRUD & API Test Suite",
-    href: "https://github.com/venkateswarlukaki",
-    role: "Spring Boot • Postman • Maven • Layered Architecture",
-    kind: "API Suite",
-    note: "Production-ready Controller-Service-Repository architecture with global exception handling, DTO mapping, and Postman collections.",
-    image: null
+    id: "04",
+    title: "Production Layered CRUD & API Test Suite",
+    timeline: "Core Backend Standard",
+    category: "Standardized Framework & Tooling",
+    tech: [
+      "Spring Boot",
+      "Controller-Service-Repo",
+      "Postman",
+      "Maven",
+      "JUnit 5",
+      "Global Exception Handling"
+    ],
+    image: null,
+    bullets: [
+      "Architected clean, decoupled Layered Architecture featuring DTO mappers, standardized JSON response structures, and centralized @ControllerAdvice error handling.",
+      "Configured automated Postman test suites and CI-friendly Maven build lifecycles for repeatable endpoint regression testing.",
+      "Enforced strict relational schema modeling, foreign key cascades, and high-efficiency indexed JPA query execution."
+    ],
+    highlights: [
+      { label: "Pattern", val: "Controller-Service-Repository" },
+      { label: "Testing", val: "Automated Postman & JUnit" },
+      { label: "Status", val: "Backend Framework • Private System" }
+    ]
   }
 ];
-
-const VENTURES = [
-  {
-    name: "Enterprise RESTful API Architectures",
-    role: "Controller-Service-Repository Pattern",
-    href: "https://github.com/venkateswarlukaki",
-    kind: "Capability",
-    note: "Clean layered backend systems featuring robust validation, standardized responses, and automated Postman test suites."
-  },
-  {
-    name: "Relational Database Design & Tuning",
-    role: "PostgreSQL & MySQL Data Engineering",
-    href: "https://github.com/venkateswarlukaki",
-    kind: "Capability",
-    note: "Optimized table schemas, normalization, foreign keys, indexing, and high-performance Spring Data JPA queries."
-  },
-  {
-    name: "High-Concurrency Booking Engines",
-    role: "Transactional Integrity & Concurrency",
-    href: "https://github.com/venkateswarlukaki",
-    kind: "Capability",
-    note: "Event ticket reservation workflows with inventory tracking, conflict resolution, and booking history auditing."
-  },
-  {
-    name: "Automated Testing & Build Automation",
-    role: "Maven, Git, GitHub & Postman",
-    href: null,
-    kind: "Capability",
-    note: "Streamlined Maven project dependencies, version control best practices, and repeatable testing workflows."
-  }
-];
-
-const Row = ({ item, index }) => {
-  const hasLink = Boolean(item.href);
-  const Wrapper = hasLink ? "a" : "div";
-
-  return (
-    <li className="pj-row">
-      <Wrapper
-        className={`pj-link${hasLink ? "" : " pj-link--static"}`}
-        {...(hasLink ? { href: item.href, target: "_blank", rel: "noreferrer" } : {})}
-      >
-        <span className="pj-num">{String(index + 1).padStart(2, "0")}</span>
-        {item.image && (
-          <img
-            src={item.image}
-            alt={item.name}
-            className="w-20 h-14 sm:w-28 sm:h-18 object-contain shrink-0 bg-bg-alt/60 border border-theme-border rounded-xl"
-          />
-        )}
-        <div className="pj-meta">
-          <span className="pj-name">{item.name}</span>
-          {item.role && <span className="pj-role">{item.role}</span>}
-          {item.note && <span className="pj-note">{item.note}</span>}
-        </div>
-        <span className="pj-kind">{item.kind}</span>
-        <span className="pj-arrow">
-          {hasLink ? (
-            <svg viewBox="0 0 24 24" width="100%" height="100%" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <path d="M7 17 17 7m-9 0h9v9" />
-            </svg>
-          ) : (
-            "•"
-          )}
-        </span>
-      </Wrapper>
-    </li>
-  );
-};
 
 export default function Projects() {
   const sectionRef = useRef(null);
+  const trackRef = useRef(null);
+  const titleRef = useRef(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
     gsap.registerPlugin(ScrollTrigger);
+
+    const section = sectionRef.current;
+    const track = trackRef.current;
+    if (!section || !track) return;
+
     const ctx = gsap.context(() => {
-      gsap.from(sectionRef.current.querySelectorAll(".pj-row"), {
-        opacity: 0,
-        y: 60,
-        duration: 0.9,
-        stagger: 0.08,
-        ease: "power3.out",
+      const getScrollDistance = () => {
+        // Distance needed to scroll all cards completely into view
+        const trackWidth = track.scrollWidth;
+        const windowWidth = window.innerWidth;
+        return Math.max(trackWidth - windowWidth + 120, 0);
+      };
+
+      const dist = getScrollDistance();
+
+      // Pin the section and animate track moving horizontally to the LEFT on scroll down
+      const tween = gsap.to(track, {
+        x: () => -dist,
+        ease: "none",
         scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 80%",
-          once: true,
+          trigger: section,
+          start: "top top",
+          end: () => `+=${Math.max(dist * 1.15, window.innerHeight * 1.5)}`,
+          pin: true,
+          pinSpacing: true,
+          scrub: 0.8,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
         },
       });
 
-      // Move headings to the left when scrolling down so they stay fully visible
-      const heads = sectionRef.current.querySelectorAll(".pj-head");
-      heads.forEach((head) => {
-        const title = head.querySelector(".pj-title");
-        if (!title) return;
-        gsap.to(title, {
-          x: -65,
-          ease: "power1.out",
+      // Move heading smoothly left as you scroll down
+      if (titleRef.current) {
+        gsap.to(titleRef.current, {
+          x: -60,
+          ease: "none",
           scrollTrigger: {
-            trigger: head,
-            start: "top 95%",
-            end: "bottom 15%",
+            trigger: section,
+            start: "top top",
+            end: () => `+=${Math.max(dist * 1.15, window.innerHeight * 1.5)}`,
             scrub: 0.8,
           },
         });
-      });
-    }, sectionRef.current);
+      }
+    }, section);
+
     return () => ctx.revert();
   }, []);
 
   return (
-    <section id="projects-section" ref={sectionRef}>
-      <div className="pj-head">
-        <span className="pj-label">PROJECTS</span>
-        <h2 className="pj-title">selected work</h2>
+    <section
+      id="projects-section"
+      ref={sectionRef}
+      className="relative w-full h-screen min-h-[680px] overflow-hidden select-none flex flex-col justify-between py-6 sm:py-10 bg-transparent"
+    >
+      {/* Section Header */}
+      <div className="w-full px-6 sm:px-12 lg:px-20 flex items-end justify-between border-b border-theme-border/60 pb-4 flex-shrink-0">
+        <div className="flex flex-col gap-1">
+          <span className="text-xs sm:text-sm font-bold tracking-[0.25em] uppercase text-fg-muted">
+            PROJECTS &amp; SYSTEMS
+          </span>
+          <h2
+            ref={titleRef}
+            className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-fg lowercase will-change-transform"
+          >
+            selected work
+          </h2>
+        </div>
+        <div className="hidden sm:flex items-center gap-2 text-xs font-semibold tracking-wider text-fg-muted uppercase">
+          <span>Scroll to explore</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </div>
       </div>
-      <ul className="pj-list">
-        {PROJECTS.map((p, i) => (
-          <Row key={p.name} item={p} index={i} />
-        ))}
-      </ul>
-      <div id="ventures" className="pj-head pj-head--secondary mt-16 sm:mt-24">
-        <span className="pj-label">WHAT I BUILD</span>
-        <h2 className="pj-title">capabilities &amp; systems</h2>
+
+      {/* Horizontal Cards Track */}
+      <div className="w-full flex-grow flex items-center overflow-hidden my-auto py-2">
+        <div
+          ref={trackRef}
+          className="flex items-center gap-6 sm:gap-10 pl-6 sm:pl-12 lg:pl-20 pr-16 sm:pr-32 will-change-transform"
+          style={{ width: "max-content" }}
+        >
+          {PROJECT_CARDS.map((proj) => (
+            <article
+              key={proj.id}
+              className="w-[86vw] sm:w-[560px] lg:w-[620px] xl:w-[660px] h-[520px] sm:h-[540px] max-h-[72vh] flex-shrink-0 bg-bg-alt/90 backdrop-blur-md border border-theme-border/80 rounded-3xl p-6 sm:p-8 flex flex-col justify-between shadow-2xl hover:border-accent transition-all duration-300"
+            >
+              {/* Card Top: Number, Title, Timeline */}
+              <div className="flex flex-col gap-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono text-sm sm:text-base font-bold text-accent">
+                      {proj.id}
+                    </span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-accent" />
+                    <span className="text-xs font-bold uppercase tracking-widest text-fg-muted">
+                      {proj.category}
+                    </span>
+                  </div>
+                  <span className="font-mono text-[11px] sm:text-xs font-semibold px-3 py-1 rounded-full bg-btn-dark-bg text-btn-dark-text border border-theme-border">
+                    {proj.timeline}
+                  </span>
+                </div>
+
+                <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-fg leading-snug">
+                  {proj.title}
+                </h3>
+
+                {/* Tech Pills */}
+                <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                  {proj.tech.map((t) => (
+                    <span
+                      key={t}
+                      className="text-[11px] sm:text-xs font-semibold px-2.5 py-0.5 rounded-md bg-bg/85 border border-theme-border text-fg shadow-sm"
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Optional Preview Image Banner */}
+              {proj.image && (
+                <div className="w-full h-24 sm:h-28 rounded-xl overflow-hidden border border-theme-border my-2 flex-shrink-0 bg-bg/60">
+                  <img
+                    src={proj.image}
+                    alt={proj.title}
+                    className="w-full h-full object-cover object-center"
+                  />
+                </div>
+              )}
+
+              {/* Card Body: Resume Bullet Points */}
+              <ul className="flex flex-col gap-2 my-2 overflow-y-auto pr-1">
+                {proj.bullets.map((b, idx) => (
+                  <li key={idx} className="flex items-start gap-2.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2 flex-shrink-0" />
+                    <p className="text-xs sm:text-[13.5px] leading-relaxed text-fg font-medium">
+                      {b}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+
+              {/* Card Footer: Architecture & Status (No broken repo links) */}
+              <div className="pt-3 border-t border-theme-border/60 flex items-center justify-between flex-wrap gap-2 text-[11px] sm:text-xs font-semibold text-fg-muted">
+                <div className="flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  <span className="text-fg font-semibold">Enterprise Architecture</span>
+                </div>
+                <span className="font-mono text-fg-muted">
+                  Private Production Codebase
+                </span>
+              </div>
+            </article>
+          ))}
+        </div>
       </div>
-      <ul className="pj-list">
-        {VENTURES.map((v, i) => (
-          <Row key={v.name} item={v} index={i} />
-        ))}
-      </ul>
+
+      {/* Section Bottom Indicator */}
+      <div className="w-full px-6 sm:px-12 lg:px-20 flex items-center justify-between text-xs text-fg-muted font-medium flex-shrink-0">
+        <span>04 Engineered Systems &amp; Architectures</span>
+        <span className="font-mono text-[11px]">Next: Contact &amp; Opportunities ↓</span>
+      </div>
     </section>
   );
 }
