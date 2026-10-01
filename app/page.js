@@ -5,6 +5,7 @@ import HeroSection from "@/components/HeroSection/HeroSection";
 import SmoothScroll from "@/components/SmoothScroll";
 import Projects from "@/components/Projects/Projects";
 import Education from "@/components/Education/Education";
+import Certifications from "@/components/Certifications/Certifications";
 import HorizontalScroll from "@/components/HorizontalScroll/HorizontalScroll";
 import Contact from "@/components/Contact/Contact";
 import SiteFooter from "@/components/SiteFooter/SiteFooter";
@@ -54,6 +55,7 @@ export default function Home() {
             <Education />
           </div>
 
+          <Certifications />
           <HorizontalScroll />
           <Contact />
           <SiteFooter />

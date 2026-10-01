@@ -15,6 +15,7 @@ const MOBILE_NAV_ITEMS = [
   { label: "ABOUT", target: "about" },
   { label: "PROJECTS", target: "projects-section" },
   { label: "EDUCATION", target: "education-section" },
+  { label: "CERTIFICATIONS", target: "certifications-section" },
   { label: "CONTACT", target: "contact-section" },
 ];
 
