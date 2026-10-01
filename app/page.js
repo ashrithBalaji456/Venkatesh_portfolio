@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar/Navbar";
 import HeroSection from "@/components/HeroSection/HeroSection";
 import SmoothScroll from "@/components/SmoothScroll";
 import Projects from "@/components/Projects/Projects";
+import HorizontalScroll from "@/components/HorizontalScroll/HorizontalScroll";
 import Contact from "@/components/Contact/Contact";
 import SiteFooter from "@/components/SiteFooter/SiteFooter";
 import Skiggle from "@/components/Featured/Skiggle";
@@ -45,6 +46,7 @@ export default function Home() {
           </div>
 
           <Projects />
+          <HorizontalScroll />
           <Contact />
           <SiteFooter />
         </div>
