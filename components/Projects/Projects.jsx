@@ -6,56 +6,43 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 const PROJECTS = [
   {
     id: "01",
-    title: "Online Event Booking System – Backend",
-    timeline: "Aug 2026 – Dec 2026",
-    category: "High-Concurrency Booking Engine & REST Architecture",
-    tech: [
-      "Java",
-      "Spring Boot",
-      "Spring Data JPA",
-      "Hibernate",
-      "PostgreSQL",
-      "MySQL",
-      "REST APIs"
-    ],
+    title: "Online Event Booking System",
+    date: "Aug 2026 – Dec 2026",
+    badge: "Backend API",
+    glowGradient: "from-cyan-400 via-blue-500 to-purple-500",
+    glowShadow: "rgba(6, 182, 212, 0.4)",
     image: "/images/projects/event-booking.jpg",
+    problemTag: "Problem Solved",
+    description: "Built a high-concurrency Event Booking Platform in Java and Spring Boot to manage real-time ticket reservations, booking history, event lifecycles, and seat availability.",
     bullets: [
-      "Developed an online event booking application using Java and Spring Boot to manage events, users, and ticket reservations.",
       "Implemented REST APIs for event creation, updating, viewing, and deleting using Spring Boot.",
-      "Designed and managed MySQL database tables for users, events, and booking details using Spring Data JPA.",
-      "Implemented ticket booking, booking history, and event availability features to improve the user experience."
+      "Designed and managed MySQL & PostgreSQL database tables for users, events, and booking details using Spring Data JPA.",
+      "Implemented transactional seat booking, booking history auditing, and conflict resolution."
     ],
-    badge: "Enterprise Architecture • Private Production Codebase"
+    tech: ["Java 17", "Spring Boot", "Spring Data JPA", "Hibernate", "PostgreSQL", "REST APIs", "Maven"]
   },
   {
     id: "02",
-    title: "Hospital Management System – Backend",
-    timeline: "Jan 2026 – Mar 2026",
-    category: "Clinical Data Platform & Healthcare Operations",
-    tech: [
-      "Java",
-      "Spring Boot",
-      "Spring Data JPA",
-      "Hibernate",
-      "PostgreSQL",
-      "MySQL",
-      "REST APIs"
-    ],
+    title: "Hospital Management System",
+    date: "Jan 2026 – Mar 2026",
+    badge: "Backend API",
+    glowGradient: "from-emerald-400 via-teal-400 to-indigo-500",
+    glowShadow: "rgba(16, 185, 129, 0.4)",
     image: "/images/projects/hospital-management.jpg",
+    problemTag: "Problem Solved",
+    description: "Full-stack healthcare backend platform managing patient registration, doctor scheduling, clinical appointments, and automated medical records billing.",
     bullets: [
       "Developed a hospital management application using Java and Spring Boot to manage patients, doctors, and appointments.",
       "Implemented REST APIs for patient registration, doctor management, and appointment scheduling.",
-      "Designed and managed MySQL database tables for patients, doctors, appointments, and medical records using Spring Data JPA.",
-      "Implemented patient record management, appointment tracking, and billing features to improve hospital operations."
+      "Designed and managed relational database tables for patients, doctors, and medical billing records using Spring Data JPA."
     ],
-    badge: "Enterprise Architecture • Private Production Codebase"
+    tech: ["Java 17", "Spring Boot", "Spring Data JPA", "Hibernate", "PostgreSQL", "MySQL", "REST APIs"]
   }
 ];
 
 export default function Projects() {
   const sectionRef = useRef(null);
   const trackRef = useRef(null);
-  const titleRef = useRef(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -66,39 +53,30 @@ export default function Projects() {
     if (!section || !track) return;
 
     const ctx = gsap.context(() => {
-      const getDist = () => {
-        return Math.max(track.scrollWidth - window.innerWidth + 140, 300);
+      // Calculate how far track needs to travel left
+      const getTravelDistance = () => {
+        const trackW = track.scrollWidth;
+        const windowW = window.innerWidth;
+        return Math.max(trackW - windowW + 100, 160);
       };
 
-      // Pin the section and glide the 2 project cards horizontally to the LEFT on scroll
+      const travelDist = getTravelDistance();
+
+      // Buttery smooth, responsive GSAP scroll with low scrub and zero lag
       gsap.to(track, {
-        x: () => -getDist(),
-        ease: "none",
+        x: () => -travelDist,
+        ease: "power1.out",
         scrollTrigger: {
           trigger: section,
-          start: "top top",
-          end: () => `+=${Math.max(getDist() * 1.35, window.innerHeight * 1.3)}`,
+          start: "top 12%",
+          end: () => `+=${Math.min(travelDist * 1.2, 500)}`,
           pin: true,
           pinSpacing: true,
-          scrub: 0.8,
-          anticipatePin: 1,
+          scrub: 0.4, // Snappy 0.4s response, eliminates dragging lag
+          anticipatePin: 0,
           invalidateOnRefresh: true,
         },
       });
-
-      // Heading glides smoothly to the left on scroll
-      if (titleRef.current) {
-        gsap.to(titleRef.current, {
-          x: -60,
-          ease: "none",
-          scrollTrigger: {
-            trigger: section,
-            start: "top top",
-            end: () => `+=${Math.max(getDist() * 1.35, window.innerHeight * 1.3)}`,
-            scrub: 0.8,
-          },
-        });
-      }
     }, section);
 
     return () => ctx.revert();
@@ -108,121 +86,115 @@ export default function Projects() {
     <section
       id="projects-section"
       ref={sectionRef}
-      className="relative w-full h-screen min-h-[700px] overflow-hidden select-none flex flex-col justify-between py-6 sm:py-8 bg-transparent"
+      className="relative w-full py-12 sm:py-16 overflow-hidden select-none bg-transparent"
     >
       {/* Section Header */}
-      <div className="w-full px-6 sm:px-12 lg:px-20 flex items-end justify-between border-b border-theme-border/60 pb-3 flex-shrink-0">
-        <div className="flex flex-col gap-0.5">
+      <div className="w-full px-6 sm:px-12 lg:px-20 mb-8 sm:mb-12 flex items-end justify-between border-b border-theme-border/50 pb-4">
+        <div className="flex flex-col gap-1">
           <span className="text-xs sm:text-sm font-bold tracking-[0.25em] uppercase text-fg-muted">
             PROJECTS
           </span>
-          <h2
-            ref={titleRef}
-            className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-fg lowercase will-change-transform"
-          >
+          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-fg lowercase">
             selected work
           </h2>
         </div>
         <div className="hidden sm:flex items-center gap-2 text-xs font-semibold tracking-wider text-fg-muted uppercase">
-          <span>Scroll to explore projects</span>
+          <span>Scroll to explore</span>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>
         </div>
       </div>
 
-      {/* Horizontal Curved Glass Cards Track */}
-      <div className="w-full flex-grow flex items-center overflow-hidden my-auto py-2">
+      {/* Horizontal Cards Track (Hardware-accelerated, zero lag) */}
+      <div className="w-full overflow-hidden">
         <div
           ref={trackRef}
-          className="flex items-center gap-8 sm:gap-12 pl-6 sm:pl-14 lg:pl-20 pr-16 sm:pr-32 will-change-transform"
-          style={{ width: "max-content" }}
+          className="flex items-stretch gap-6 sm:gap-10 pl-6 sm:pl-12 lg:pl-20 pr-12 sm:pr-24"
+          style={{ width: "max-content", willChange: "transform", transform: "translateZ(0)" }}
         >
           {PROJECTS.map((proj) => (
             <article
               key={proj.id}
-              className="glass-card w-[88vw] sm:w-[620px] lg:w-[700px] xl:w-[740px] max-h-[76vh] flex-shrink-0 p-6 sm:p-9 flex flex-col justify-between relative overflow-hidden"
+              className="relative w-[88vw] sm:w-[500px] md:w-[540px] lg:w-[560px] bg-[#1a1d24] border border-white/10 rounded-[22px] p-6 sm:p-7 shadow-2xl flex flex-col justify-between overflow-hidden flex-shrink-0 transition-transform duration-300 hover:-translate-y-1.5"
+              style={{
+                boxShadow: `0 20px 40px -15px rgba(0, 0, 0, 0.4), 0 0 20px -5px ${proj.glowShadow}`
+              }}
             >
-              {/* Soft ambient glass specular sheen */}
-              <div className="absolute -top-24 -right-24 w-60 h-60 bg-white/30 rounded-full blur-3xl pointer-events-none" />
-              <div className="absolute -bottom-24 -left-24 w-60 h-60 bg-white/20 rounded-full blur-3xl pointer-events-none" />
+              {/* Top Glowing Gradient Accent Line */}
+              <div
+                className={`absolute top-0 left-0 right-0 h-[3.5px] bg-gradient-to-r ${proj.glowGradient} rounded-t-[22px]`}
+                style={{
+                  boxShadow: `0 0 14px ${proj.glowShadow}`
+                }}
+              />
 
-              {/* Card Top: Number, Category, Timeline */}
-              <div className="flex flex-col gap-3 relative z-10">
-                <div className="flex items-center justify-between flex-wrap gap-2">
+              {/* Top Meta Row */}
+              <div>
+                <div className="flex items-center justify-between gap-2 pt-1 mb-3">
+                  <span className="text-amber-300 font-bold text-xs sm:text-[13px] tracking-wide font-mono">
+                    {proj.date}
+                  </span>
                   <div className="flex items-center gap-2">
-                    <span className="font-mono text-base sm:text-lg font-extrabold text-accent">
-                      {proj.id}
+                    <span className="px-3 py-1 rounded-full text-[11px] font-semibold bg-emerald-950/70 border border-emerald-500/40 text-emerald-400">
+                      {proj.badge}
                     </span>
-                    <span className="w-1.5 h-1.5 rounded-full bg-accent" />
-                    <span className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#242732]">
-                      {proj.category}
+                    <span className="px-3 py-1 rounded-full text-[11px] font-semibold bg-white/5 border border-white/15 text-amber-200/90 flex items-center gap-1 cursor-default">
+                      <span>Details</span>
+                      <span>↗</span>
                     </span>
                   </div>
-                  <span className="glass-pill px-3.5 py-1 text-[11px] sm:text-xs font-mono font-bold text-[#111317] rounded-full">
-                    {proj.timeline}
-                  </span>
                 </div>
 
-                <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#111317] leading-tight">
+                {/* Project Title */}
+                <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight leading-snug">
                   {proj.title}
                 </h3>
 
-                {/* Glass Tech Pills */}
-                <div className="flex flex-wrap gap-1.5 sm:gap-2 pt-1">
-                  {proj.tech.map((t) => (
-                    <span
-                      key={t}
-                      className="glass-pill px-3 py-0.5 text-xs font-semibold text-[#111317] rounded-full"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {/* Preview Image Banner */}
-              {proj.image && (
-                <div className="w-full h-36 sm:h-44 rounded-2xl overflow-hidden border border-white/60 my-3 flex-shrink-0 shadow-md bg-black/5 relative z-10">
+                {/* Preview Image with "Problem Solved" floating badge */}
+                <div className="relative w-full h-44 sm:h-52 rounded-xl overflow-hidden border border-white/10 my-4 bg-black/60 shadow-inner group">
                   <img
                     src={proj.image}
                     alt={proj.title}
-                    className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
                   />
+                  {/* Floating Pill Badge */}
+                  <div className="absolute top-3 right-3 px-3 py-1 rounded-full text-[11px] font-semibold bg-[#2a1b3d]/90 backdrop-blur-md text-amber-200 border border-purple-400/40 flex items-center gap-1.5 shadow-lg">
+                    <span>💡</span>
+                    <span>{proj.problemTag}</span>
+                  </div>
                 </div>
-              )}
 
-              {/* Resume Bullet Points (No inner scrollbar, clear legible text) */}
-              <ul className="flex flex-col gap-2 sm:gap-2.5 my-2 relative z-10">
-                {proj.bullets.map((bullet, idx) => (
-                  <li key={idx} className="flex items-start gap-2.5">
-                    <span className="w-2 h-2 rounded-full bg-accent mt-1.5 flex-shrink-0 shadow-sm" />
-                    <p className="text-xs sm:text-sm lg:text-[14px] leading-relaxed text-[#161820] font-medium">
-                      {bullet}
-                    </p>
-                  </li>
+                {/* Summary Description */}
+                <p className="text-zinc-300 text-xs sm:text-sm leading-relaxed mb-3">
+                  {proj.description}
+                </p>
+
+                {/* Resume Bullets */}
+                <ul className="flex flex-col gap-2 mb-4">
+                  {proj.bullets.map((b, i) => (
+                    <li key={i} className="flex items-start gap-2.5 text-xs sm:text-[13px] text-zinc-300 leading-relaxed">
+                      <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 mt-1.5 flex-shrink-0" />
+                      <span>{b}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Bottom Tech Pills */}
+              <div className="pt-3 border-t border-white/10 flex flex-wrap gap-1.5 sm:gap-2">
+                {proj.tech.map((t) => (
+                  <span
+                    key={t}
+                    className="px-3 py-1 rounded-full text-[11px] font-medium bg-white/5 border border-white/15 text-zinc-300 hover:border-white/30 transition-colors"
+                  >
+                    {t}
+                  </span>
                 ))}
-              </ul>
-
-              {/* Card Footer: Enterprise Status (No broken repo links) */}
-              <div className="pt-3 border-t border-white/40 flex items-center justify-between flex-wrap gap-2 text-xs font-semibold text-[#282c38] relative z-10">
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  <span className="text-[#111317] font-bold">Enterprise Architecture Verified</span>
-                </div>
-                <span className="font-mono text-[#282c38]">
-                  Private Production Codebase
-                </span>
               </div>
             </article>
           ))}
         </div>
-      </div>
-
-      {/* Section Bottom Indicator */}
-      <div className="w-full px-6 sm:px-12 lg:px-20 flex items-center justify-between text-xs text-fg-muted font-medium flex-shrink-0">
-        <span>02 Production Projects (Online Event Booking &amp; Hospital Management)</span>
-        <span className="font-mono text-[11px]">Scroll down for Contact ↓</span>
       </div>
     </section>
   );
