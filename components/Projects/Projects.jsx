@@ -127,13 +127,13 @@ export default function Projects() {
         },
       });
 
-      // Move headings to the right when scrolling down, matching the first heading
+      // Move headings to the left when scrolling down so they stay fully visible
       const heads = sectionRef.current.querySelectorAll(".pj-head");
       heads.forEach((head) => {
         const title = head.querySelector(".pj-title");
         if (!title) return;
         gsap.to(title, {
-          x: 75,
+          x: -65,
           ease: "power1.out",
           scrollTrigger: {
             trigger: head,
