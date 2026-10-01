@@ -13,19 +13,22 @@
 [data-theme="dark"],
 [data-theme="light"] {
   --font-inter: 'Inter', sans-serif;
-  --color-bg: #c8cdd7;
-  --color-bg-alt: #d9dde6;
-  --color-text: #181b22;
-  --color-text-muted: #3d424f;
-  --color-text-subtle: #5a6070;
+  --color-bg: #9e9fa3;
+  --color-bg-light: #c0c1c4;
+  --color-bg-mid: #9e9fa3;
+  --color-bg-dark: #8f9092;
+  --color-bg-alt: #b8b9bd;
+  --color-text: #16181f;
+  --color-text-muted: #363942;
+  --color-text-subtle: #4e525d;
   --color-accent: #0016ec;
-  --color-accent-soft: #b0b6c4;
-  --color-border: #b0b6c4;
-  --color-btn-dark-bg: #252832;
-  --color-btn-dark-text: #eef0f6;
-  --color-btn-light-bg: #b8bdc9;
-  --color-btn-light-text: #181b22;
-  --color-btn-sm-bg: #b8bdc9;
+  --color-accent-soft: #a2a4aa;
+  --color-border: #92949b;
+  --color-btn-dark-bg: #22252e;
+  --color-btn-dark-text: #eef0f5;
+  --color-btn-light-bg: #a8aab0;
+  --color-btn-light-text: #16181f;
+  --color-btn-sm-bg: #a8aab0;
 }
 * {
   user-select: none;
@@ -36,10 +39,18 @@ html, body {
   overscroll-behavior: none;
   overflow-x: hidden;
   width: 100%;
+  min-height: 100vh;
   font-family: var(--font-inter), 'Inter', sans-serif;
-  background-color: var(--color-bg);
+  background-color: #9e9fa3;
+  background-image: 
+    radial-gradient(ellipse 70% 55% at 18% 28%, rgba(215, 217, 220, 0.45) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 50% at 22% 80%, rgba(205, 207, 212, 0.35) 0%, transparent 68%),
+    linear-gradient(115deg, #c0c1c4 0%, #b0b1b5 30%, #9e9fa3 55%, #8f9092 100%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
   color: var(--color-text);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: color 0.3s ease;
 }
 img, svg, video {
   pointer-events: none;
@@ -274,7 +285,7 @@ html {
   display: flex;
   align-items: center;
   overflow: hidden;
-  background-color: var(--color-bg);
+  background-color: transparent;
 }
 .Horizontal__text {
   display: flex;
@@ -299,7 +310,7 @@ html {
 #contact-section {
   width: 100%;
   height: 90vh;
-  background-color: var(--color-bg);
+  background-color: transparent;
   position: relative;
   overflow: hidden;
   display: flex;
@@ -398,7 +409,7 @@ html {
 }
 #main-footer {
   width: 100%;
-  background-color: var(--color-bg);
+  background-color: transparent;
   color: var(--color-text);
   padding: 5vw 4vw 2vw 4vw;
   display: flex;

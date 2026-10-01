@@ -88,7 +88,7 @@ export default function HeroSection() {
         id="loader"
         ref={loaderRef}
         style={{
-          backgroundColor: "#c8cdd7",
+          background: "linear-gradient(115deg, #c0c1c4 0%, #b0b1b5 30%, #9e9fa3 55%, #8f9092 100%)",
           zIndex: 100002,
           display: "flex",
           flexDirection: "column",
@@ -123,9 +123,9 @@ export default function HeroSection() {
       </div>
 
       {/* Hero Section */}
-      <section id="hero-section" ref={sectionRef} className="relative w-full h-screen min-h-[600px] overflow-hidden select-none bg-bg">
+      <section id="hero-section" ref={sectionRef} className="relative w-full h-screen min-h-[600px] overflow-hidden select-none bg-transparent">
         {/* Dynamic Background with Rich Video Presence & Seamless Blend */}
-        <div ref={videoContainerRef} className="absolute inset-0 w-full h-full bg-bg overflow-hidden">
+        <div ref={videoContainerRef} className="absolute inset-0 w-full h-full bg-transparent overflow-hidden">
           <video
             ref={videoRef}
             src="/hero-bg-video.mp4"
@@ -137,8 +137,8 @@ export default function HeroSection() {
             className="w-full h-full object-cover object-center opacity-85 transition-opacity duration-700"
           />
           {/* Subtle Ambient Side Gradient & Crisp Bottom Seam without Milky Blur */}
-          <div className="absolute inset-0 bg-gradient-to-r from-bg/75 via-transparent to-bg/25 pointer-events-none" />
-          <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-bg to-transparent pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#c0c1c4]/75 via-transparent to-[#8f9092]/25 pointer-events-none" />
+          <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#9e9fa3] to-transparent pointer-events-none" />
         </div>
 
         {/* Hero Content */}
