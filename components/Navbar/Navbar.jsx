@@ -5,7 +5,6 @@ import { Trail } from "./TrailText";
 import LetsTalk from "./LetsTalk";
 import MenuButton from "./MenuButton";
 import Link from "next/link";
-import ThemeButton from "./MusicButton";
 
 const EMAIL = "venkateswarlukaki16@gmail.com";
 const WHATSAPP_URL = "https://wa.me/916281537725";
@@ -124,7 +123,6 @@ export default function Navbar() {
           </Link>
           <div className="hidden lg:flex items-center justify-around font-AeonikMedium">
             <Trail open={open} className="flex">
-              <ThemeButton />
               <LetsTalk />
               <MenuButton />
             </Trail>

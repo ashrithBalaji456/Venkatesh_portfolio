@@ -84,7 +84,7 @@ const Row = ({ item, index }) => {
           <img
             src={item.image}
             alt={item.name}
-            className="w-20 h-14 sm:w-28 sm:h-18 object-contain shrink-0 bg-white/5 border border-white/10 rounded-xl"
+            className="w-20 h-14 sm:w-28 sm:h-18 object-contain shrink-0 bg-bg-alt/60 border border-theme-border rounded-xl"
           />
         )}
         <div className="pj-meta">

@@ -43,7 +43,7 @@ export default function Home() {
     <SmoothScroll>
       <Suspense
         fallback={
-          <div className="w-screen bg-black h-screen text-white text-3xl flex items-center justify-center">
+          <div className="w-screen bg-bg h-screen text-fg text-2xl flex items-center justify-center font-Aeonik">
             Loading...
           </div>
         }

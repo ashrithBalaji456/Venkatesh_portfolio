@@ -88,7 +88,7 @@ export default function HeroSection() {
         id="loader"
         ref={loaderRef}
         style={{
-          backgroundColor: "#131418",
+          backgroundColor: "#1c1e24",
           zIndex: 100002,
           display: "flex",
           flexDirection: "column",
@@ -105,7 +105,7 @@ export default function HeroSection() {
           <img
             src="/avatar-logo.png"
             alt="Venkateswarlu Kaki"
-            className="w-20 h-20 sm:w-24 sm:h-24 rounded-full border border-white/20 mb-6 object-cover object-top shadow-2xl"
+            className="w-20 h-20 sm:w-24 sm:h-24 rounded-full border border-theme-border mb-6 object-cover object-top shadow-2xl"
           />
           <div className="h-12 flex items-center justify-center overflow-hidden">
             <motion.div
@@ -114,7 +114,7 @@ export default function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -18 }}
               transition={{ duration: 0.35 }}
-              className="text-[#F5F1EA] text-2xl sm:text-4xl font-extrabold tracking-widest uppercase"
+              className="text-fg text-2xl sm:text-4xl font-extrabold tracking-widest uppercase"
             >
               {currentText}
             </motion.div>
@@ -150,7 +150,7 @@ export default function HeroSection() {
             hidden: { opacity: 0 },
             visible: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.2 } },
           }}
-          className="absolute top-1/2 -translate-y-1/2 left-6 sm:left-12 lg:left-20 z-10 max-w-[560px] p-6 rounded-2xl bg-bg/75 lg:bg-transparent lg:p-0 backdrop-blur-md lg:backdrop-blur-none"
+          className="absolute top-1/2 -translate-y-1/2 left-6 sm:left-12 lg:left-20 z-10 max-w-[560px] p-6 rounded-2xl bg-bg/85 lg:bg-transparent lg:p-0 backdrop-blur-md lg:backdrop-blur-none"
         >
           <motion.div
             variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
@@ -167,7 +167,7 @@ export default function HeroSection() {
           <h1 className="text-4xl sm:text-5xl lg:text-[3.2rem] font-black uppercase leading-[1.05] tracking-tight text-fg mb-6">
             JAVA BACKEND <br />
             &amp; SPRING BOOT <br />
-            <span className="text-fg-muted/70 font-bold">SYSTEMS DEVELOPER</span>
+            <span className="text-fg-muted font-bold">SYSTEMS DEVELOPER</span>
           </h1>
 
           <p className="text-xs sm:text-sm text-fg-muted leading-relaxed mb-8 max-w-[44ch]">
@@ -178,7 +178,7 @@ export default function HeroSection() {
             <a
               href="#projects-section"
               onClick={handleScrollToWork}
-              className="px-6 py-3.5 bg-fg text-bg rounded-full text-xs font-semibold flex items-center gap-2 hover:bg-accent hover:text-white transition-all shadow-lg active:scale-95"
+              className="px-6 py-3.5 bg-btn-dark-bg text-btn-dark-text border border-theme-border rounded-full text-xs font-semibold flex items-center gap-2 hover:bg-accent hover:text-fg transition-all shadow-lg active:scale-95"
             >
               <span>View Projects</span>
               <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-none stroke-current" strokeWidth="2.5">
@@ -191,7 +191,7 @@ export default function HeroSection() {
               target="_blank"
               rel="noopener noreferrer"
               download
-              className="text-xs font-semibold border-b border-current py-1 flex items-center gap-1.5 hover:text-accent hover:border-accent transition-colors"
+              className="text-xs font-semibold border-b border-theme-border text-fg-muted py-1 flex items-center gap-1.5 hover:text-fg hover:border-fg transition-colors"
             >
               <span>Download Resume</span>
               <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-none stroke-current" strokeWidth="2.5">
@@ -211,8 +211,8 @@ export default function HeroSection() {
             aria-label={isMuted ? "Unmute video audio" : "Mute video audio"}
             className={`flex items-center gap-2.5 px-4 py-2.5 rounded-full text-xs font-semibold tracking-wider transition-all shadow-xl active:scale-95 cursor-pointer backdrop-blur-md border ${
               isMuted
-                ? "bg-bg-alt/90 border-theme-border text-fg hover:bg-accent hover:text-white"
-                : "bg-emerald-600/90 border-emerald-400/50 text-white animate-pulse"
+                ? "bg-bg-alt/90 border-theme-border text-fg hover:bg-accent hover:text-fg"
+                : "bg-[#283f34] border-emerald-500/40 text-[#c2ebd4] animate-pulse"
             }`}
           >
             {isMuted ? (
@@ -232,9 +232,9 @@ export default function HeroSection() {
                 </svg>
                 <span>AUDIO PLAYING</span>
                 <span className="flex items-center gap-0.5 ml-1">
-                  <span className="w-1 h-3 bg-white rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                  <span className="w-1 h-4 bg-white rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                  <span className="w-1 h-2 bg-white rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                  <span className="w-1 h-3 bg-fg rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                  <span className="w-1 h-4 bg-fg rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                  <span className="w-1 h-2 bg-fg rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
                 </span>
               </>
             )}
@@ -245,7 +245,7 @@ export default function HeroSection() {
             type="button"
             onClick={togglePlay}
             aria-label={isPlaying ? "Pause background video" : "Play background video"}
-            className="flex items-center gap-2 bg-bg-alt/90 border border-theme-border px-3.5 py-2.5 rounded-full text-fg hover:bg-accent hover:text-white transition-all active:scale-95 shadow-lg cursor-pointer backdrop-blur-md"
+            className="flex items-center gap-2 bg-bg-alt/90 border border-theme-border px-3.5 py-2.5 rounded-full text-fg hover:bg-accent hover:text-fg transition-all active:scale-95 shadow-lg cursor-pointer backdrop-blur-md"
           >
             <span className="text-[11px] font-bold tracking-[0.15em] uppercase">
               {isPlaying ? "PAUSE" : "PLAY"}

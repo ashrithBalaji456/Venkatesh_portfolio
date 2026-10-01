@@ -10,36 +10,22 @@
   font-display: swap;
 }
 :root,
+[data-theme="dark"],
 [data-theme="light"] {
   --font-inter: 'Inter', sans-serif;
-  --color-bg: #F5F5F7;
-  --color-bg-alt: #ffffff;
-  --color-text: #131418;
-  --color-text-muted: #5E606A;
-  --color-text-subtle: #8A8D9A;
-  --color-accent: #335EEA;
-  --color-accent-soft: #E8EDFB;
-  --color-border: #DFE2EB;
-  --color-btn-dark-bg: #1F2128;
-  --color-btn-dark-text: #F3F4F7;
-  --color-btn-light-bg: #E8EAEE;
-  --color-btn-light-text: #131418;
-  --color-btn-sm-bg: #E8EAEE;
-}
-[data-theme="dark"] {
-  --color-bg: #131418;
-  --color-bg-alt: #1A1C22;
-  --color-text: #F3F4F7;
-  --color-text-muted: #9EA1AD;
-  --color-text-subtle: #676974;
-  --color-accent: #527BF5;
-  --color-accent-soft: #1E2333;
-  --color-border: #232631;
-  --color-btn-dark-bg: #F3F4F7;
-  --color-btn-dark-text: #131418;
-  --color-btn-light-bg: #20232E;
-  --color-btn-light-text: #F3F4F7;
-  --color-btn-sm-bg: #20232E;
+  --color-bg: #1c1e24;
+  --color-bg-alt: #262932;
+  --color-text: #d8dae2;
+  --color-text-muted: #959aa8;
+  --color-text-subtle: #6b7080;
+  --color-accent: #4a74f0;
+  --color-accent-soft: #282f42;
+  --color-border: #353947;
+  --color-btn-dark-bg: #2f333f;
+  --color-btn-dark-text: #e0e2ec;
+  --color-btn-light-bg: #262932;
+  --color-btn-light-text: #d8dae2;
+  --color-btn-sm-bg: #262932;
 }
 * {
   user-select: none;
@@ -92,7 +78,7 @@ html {
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
-  background-color: black;
+  background-color: var(--color-bg);
 }
 #hero-section {
   width: 100%;
@@ -382,24 +368,24 @@ html {
   white-space: nowrap;
 }
 #ct-btn {
-  background-color: var(--color-text);
-  color: var(--color-bg);
-  border: 2px solid var(--color-text);
+  background-color: var(--color-btn-dark-bg);
+  color: var(--color-btn-dark-text);
+  border: 1.5px solid var(--color-border);
 }
 #ct-btn:hover {
   background-color: var(--color-accent);
   border-color: var(--color-accent);
-  color: var(--color-bg);
+  color: var(--color-text);
   transform: translateY(-2px);
 }
 #ct-btn-secondary {
-  background-color: transparent;
+  background-color: var(--color-bg-alt);
   color: var(--color-text);
-  border: 2px solid var(--color-text);
+  border: 1.5px solid var(--color-border);
 }
 #ct-btn-secondary:hover {
   background-color: var(--color-accent-soft);
-  border-color: var(--color-accent-soft);
+  border-color: var(--color-accent);
   transform: translateY(-2px);
 }
 #ct-btn svg,
