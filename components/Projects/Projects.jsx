@@ -49,17 +49,21 @@ export default function Projects() {
     gsap.registerPlugin(ScrollTrigger);
 
     const ctx = gsap.context(() => {
-      const moveX = window.innerWidth < 640 ? -35 : -75;
-      gsap.to(titleRef.current, {
-        x: moveX,
-        ease: "power1.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 90%",
-          end: "bottom 20%",
-          scrub: 0.8,
-        },
-      });
+      const startX = window.innerWidth < 640 ? 35 : 75;
+      gsap.fromTo(
+        titleRef.current,
+        { x: startX },
+        {
+          x: 0,
+          ease: "power1.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 95%",
+            end: "top 25%",
+            scrub: 0.8,
+          },
+        }
+      );
     }, sectionRef);
 
     return () => ctx.revert();
@@ -72,8 +76,8 @@ export default function Projects() {
       className="relative w-full py-16 sm:py-24 px-6 sm:px-12 lg:px-20 bg-transparent z-10"
     >
       {/* Section Header */}
-      <div className="w-full mb-10 sm:mb-14 flex items-end justify-between border-b border-theme-border/50 pb-4 max-w-7xl mx-auto overflow-hidden">
-        <div className="flex flex-col gap-1">
+      <div className="w-full mb-10 sm:mb-14 flex items-end justify-between border-b border-theme-border/50 pb-4 max-w-7xl mx-auto">
+        <div className="flex flex-col gap-1 pl-1">
           <span className="text-xs sm:text-sm font-bold tracking-[0.25em] uppercase text-fg-muted">
             PROJECTS
           </span>

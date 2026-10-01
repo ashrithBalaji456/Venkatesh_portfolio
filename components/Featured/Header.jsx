@@ -11,8 +11,8 @@ export default function Header() {
     offset: ["start end", "end start"],
   });
 
-  const x1 = useTransform(scrollYProgress, [0, 1], [30, -60]);
-  const x2 = useTransform(scrollYProgress, [0, 1], [15, -35]);
+  const x1 = useTransform(scrollYProgress, [0, 1], [40, 0]);
+  const x2 = useTransform(scrollYProgress, [0, 1], [20, 0]);
 
   const [open, set] = useState(false);
   useEffect(() => { set(true); }, []);
