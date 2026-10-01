@@ -12,7 +12,8 @@ export default function HeroSection() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentText, setCurrentText] = useState("వెంకటేశ్వర్లు పోర్ట్‌ఫోలియో");
 
-  const [isMuted, setIsMuted] = useState(true);
+  const [isMuted, setIsMuted] = useState(false);
+  const userManuallyMutedRef = useRef(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -23,6 +24,15 @@ export default function HeroSection() {
       onComplete: () => {
         setLoaderDone(true);
         document.body.style.overflow = "";
+        // Attempt unmuting again when intro finishes if user didn't manually mute
+        if (!userManuallyMutedRef.current && videoRef.current && videoRef.current.muted) {
+          videoRef.current.muted = false;
+          videoRef.current.volume = 1.0;
+          videoRef.current
+            .play()
+            .then(() => setIsMuted(false))
+            .catch(() => {});
+        }
       },
     });
 
@@ -32,15 +42,57 @@ export default function HeroSection() {
     const t1 = setTimeout(() => setCurrentText("वेंकटेश्वर पोर्टफोलियो"), 900);
     const t2 = setTimeout(() => setCurrentText("VENKATESWARLU PORTFOLIO"), 1800);
 
-    if (videoRef.current) {
-      videoRef.current.muted = true;
-      videoRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
-    }
+    // Audio Autoplay Handling:
+    // Attempt unmuted audio playback by default
+    const startAudioByDefault = () => {
+      if (userManuallyMutedRef.current || !videoRef.current) return;
+      videoRef.current.muted = false;
+      videoRef.current.volume = 1.0;
+      videoRef.current
+        .play()
+        .then(() => {
+          setIsPlaying(true);
+          setIsMuted(false);
+        })
+        .catch(() => {
+          // If browser policy blocks unmuted autoplay without user gesture,
+          // play muted initially so the video doesn't freeze, and unmute on first gesture
+          if (videoRef.current && !userManuallyMutedRef.current) {
+            videoRef.current.muted = true;
+            videoRef.current
+              .play()
+              .then(() => setIsPlaying(true))
+              .catch(() => {});
+            setIsMuted(true);
+          }
+        });
+    };
+
+    startAudioByDefault();
+
+    // Listen for any user interaction (click, touch, key, scroll) to unmute immediately
+    const onUserInteraction = () => {
+      if (userManuallyMutedRef.current) return;
+      if (videoRef.current && videoRef.current.muted) {
+        videoRef.current.muted = false;
+        videoRef.current.volume = 1.0;
+        videoRef.current.play().catch(() => {});
+        setIsMuted(false);
+      }
+      removeListeners();
+    };
+
+    const events = ["click", "touchstart", "pointerdown", "keydown", "scroll", "wheel"];
+    const removeListeners = () => {
+      events.forEach((evt) => window.removeEventListener(evt, onUserInteraction));
+    };
+    events.forEach((evt) => window.addEventListener(evt, onUserInteraction, { once: true, passive: true }));
 
     return () => {
       tl.kill();
       clearTimeout(t1);
       clearTimeout(t2);
+      removeListeners();
       document.body.style.overflow = "";
     };
   }, []);
@@ -72,6 +124,11 @@ export default function HeroSection() {
   const toggleSound = () => {
     if (!videoRef.current) return;
     const nextMuted = !isMuted;
+    if (nextMuted) {
+      userManuallyMutedRef.current = true;
+    } else {
+      userManuallyMutedRef.current = false;
+    }
     videoRef.current.muted = nextMuted;
     videoRef.current.volume = nextMuted ? 0 : 1.0;
     setIsMuted(nextMuted);
@@ -131,7 +188,6 @@ export default function HeroSection() {
             src="/hero-bg-video.mp4"
             autoPlay
             loop
-            muted
             playsInline
             preload="auto"
             className="w-full h-full object-cover object-center opacity-85 transition-opacity duration-700"
@@ -211,7 +267,7 @@ export default function HeroSection() {
             className={`flex items-center gap-2.5 px-4 py-2.5 rounded-full text-xs font-semibold tracking-wider transition-all shadow-xl active:scale-95 cursor-pointer backdrop-blur-md border ${
               isMuted
                 ? "bg-bg-alt/90 border-theme-border text-fg hover:bg-accent hover:text-fg"
-                : "bg-[#283f34] border-emerald-500/40 text-[#c2ebd4] animate-pulse"
+                : "bg-[#18392b] border-emerald-500/50 text-[#86efac]"
             }`}
           >
             {isMuted ? (
@@ -229,11 +285,11 @@ export default function HeroSection() {
                   <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
                   <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
                 </svg>
-                <span>AUDIO PLAYING</span>
+                <span>MUTE AUDIO</span>
                 <span className="flex items-center gap-0.5 ml-1">
-                  <span className="w-1 h-3 bg-fg rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                  <span className="w-1 h-4 bg-fg rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                  <span className="w-1 h-2 bg-fg rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                  <span className="w-1 h-3 bg-current rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                  <span className="w-1 h-4 bg-current rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                  <span className="w-1 h-2 bg-current rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
                 </span>
               </>
             )}
