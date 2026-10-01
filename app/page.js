@@ -54,7 +54,7 @@ export default function Home() {
 
           <div
             id="about"
-            className="h-auto relative mt-16 md:mt-[10rem] px-6 sm:px-12 lg:px-20 pb-24 z-10 flex flex-col gap-8 md:gap-12 animate-fade-in"
+            className="h-auto relative mt-8 md:mt-16 px-6 sm:px-12 lg:px-20 pb-24 z-10 flex flex-col gap-8 md:gap-12 animate-fade-in"
             ref={ref}
           >
             <Skiggle />

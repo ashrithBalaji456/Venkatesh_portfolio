@@ -31,6 +31,8 @@ export default function HeroSection() {
     const t2 = setTimeout(() => setCurrentText("VENKATESWARLU PORTFOLIO"), 1800);
 
     if (videoRef.current) {
+      videoRef.current.muted = true;
+      videoRef.current.volume = 0;
       videoRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
     }
 
@@ -55,11 +57,12 @@ export default function HeroSection() {
 
   const togglePlay = () => {
     if (!videoRef.current) return;
+    videoRef.current.muted = true;
+    videoRef.current.volume = 0;
     if (isPlaying) {
       videoRef.current.pause();
       setIsPlaying(false);
     } else {
-      videoRef.current.muted = false;
       videoRef.current
         .play()
         .then(() => setIsPlaying(true))
@@ -74,7 +77,7 @@ export default function HeroSection() {
         id="loader"
         ref={loaderRef}
         style={{
-          backgroundColor: "#08080a",
+          backgroundColor: "#0A0A0C",
           zIndex: 100002,
           display: "flex",
           flexDirection: "column",
@@ -91,7 +94,7 @@ export default function HeroSection() {
           <img
             src="/avatar-logo.png"
             alt="Venkateswarlu Kaki"
-            className="w-20 h-20 sm:w-24 sm:h-24 rounded-full border-2 border-accent/60 mb-6 object-cover object-top shadow-2xl"
+            className="w-20 h-20 sm:w-24 sm:h-24 rounded-full border border-white/20 mb-6 object-cover object-top shadow-2xl"
           />
           <div className="h-12 flex items-center justify-center overflow-hidden">
             <motion.div
@@ -109,9 +112,9 @@ export default function HeroSection() {
       </div>
 
       {/* Hero Section */}
-      <section id="hero-section" ref={sectionRef} className="relative w-full h-screen min-h-[600px] overflow-hidden select-none">
-        {/* Dynamic Background */}
-        <div ref={videoContainerRef} className="absolute inset-0 w-full h-full bg-[#0a0a0e] overflow-hidden">
+      <section id="hero-section" ref={sectionRef} className="relative w-full h-screen min-h-[600px] overflow-hidden select-none bg-bg">
+        {/* Dynamic Background with Seamless Top-to-Bottom Fade */}
+        <div ref={videoContainerRef} className="absolute inset-0 w-full h-full bg-bg overflow-hidden">
           <video
             ref={videoRef}
             src="/hero-bg-video.mp4"
@@ -120,11 +123,12 @@ export default function HeroSection() {
             muted
             playsInline
             preload="auto"
-            className="w-full h-full object-cover object-center opacity-50 mix-blend-screen"
+            className="w-full h-full object-cover object-center opacity-35"
           />
-          {/* Subtle Ambient Backend Architecture Glow & Grids */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(0,22,236,0.25),rgba(255,255,255,0))]" />
+          {/* Subtle Ambient Grid & Seamless Vertical Gradient Blends */}
           <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-b from-bg/90 via-bg/30 to-bg pointer-events-none" />
+          <div className="absolute bottom-0 left-0 right-0 h-44 sm:h-64 bg-gradient-to-t from-bg via-bg/95 to-transparent pointer-events-none" />
         </div>
 
         {/* Hero Content */}
@@ -141,13 +145,13 @@ export default function HeroSection() {
             variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
             className="flex items-center gap-3 mb-2"
           >
-            <span className="text-xs font-semibold tracking-[0.25em] text-accent uppercase">
+            <span className="text-xs font-semibold tracking-[0.25em] text-fg-muted uppercase">
               HELLO, I'M VENKATESWARLU
             </span>
             <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
           </motion.div>
 
-          <div className="w-12 h-[2px] bg-accent mb-6" />
+          <div className="w-12 h-[1.5px] bg-fg/20 mb-6" />
 
           <h1 className="text-4xl sm:text-5xl lg:text-[3.2rem] font-black uppercase leading-[1.05] tracking-tight text-fg mb-6">
             JAVA BACKEND <br />
