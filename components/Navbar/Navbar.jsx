@@ -56,9 +56,11 @@ export default function Navbar() {
       <div className="fixed top-0 left-0 z-[100001] w-full py-5 lg:hidden px-5 backdrop-blur-md bg-bg/80 border-b border-theme-border/40">
         <div className="flex items-center justify-between w-full font-extrabold">
           <Link href="/" onClick={(e) => handleMobileNav(e, "top")} className="flex items-center gap-2.5 cursor-pointer">
-            <div className="w-8 h-8 rounded-full bg-accent/20 border border-accent/40 flex items-center justify-center font-bold text-xs text-accent">
-              VK
-            </div>
+            <img
+              src="/avatar-logo.png"
+              alt="Venkatesh"
+              className="w-8 h-8 rounded-full object-cover object-top border border-accent/40 shadow-sm"
+            />
             <span className="tracking-wider font-semibold text-lg text-fg">VENKATESH</span>
           </Link>
           <button
@@ -113,9 +115,11 @@ export default function Navbar() {
       <div className="fixed top-0 left-0 w-full px-6 lg:px-20 z-[100001] hidden lg:block">
         <div className="items-start justify-between flex pt-10 pb-8">
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-full bg-accent/15 border border-accent/40 flex items-center justify-center font-bold text-sm text-accent group-hover:bg-accent group-hover:text-white transition-all shadow-sm">
-              VK
-            </div>
+            <img
+              src="/avatar-logo.png"
+              alt="Venkatesh"
+              className="w-10 h-10 rounded-full object-cover object-top border border-accent/40 shadow-sm group-hover:scale-105 transition-transform"
+            />
             <span className="font-AeonikMedium text-2xl tracking-wider text-fg uppercase">VENKATESH.</span>
           </Link>
           <div className="hidden lg:flex items-center justify-around font-AeonikMedium">

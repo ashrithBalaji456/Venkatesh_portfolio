@@ -30,6 +30,10 @@ export default function HeroSection() {
     const t1 = setTimeout(() => setCurrentText("वेंकटेश्वर पोर्टफोलियो"), 900);
     const t2 = setTimeout(() => setCurrentText("VENKATESWARLU PORTFOLIO"), 1800);
 
+    if (videoRef.current) {
+      videoRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
+    }
+
     return () => {
       tl.kill();
       clearTimeout(t1);
@@ -84,9 +88,11 @@ export default function HeroSection() {
           transition={{ duration: 0.6 }}
           className="flex flex-col items-center justify-center text-center px-4"
         >
-          <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-accent/20 border border-accent/40 flex items-center justify-center font-bold text-2xl text-accent mb-6 shadow-2xl">
-            VK
-          </div>
+          <img
+            src="/avatar-logo.png"
+            alt="Venkateswarlu Kaki"
+            className="w-20 h-20 sm:w-24 sm:h-24 rounded-full border-2 border-accent/60 mb-6 object-cover object-top shadow-2xl"
+          />
           <div className="h-12 flex items-center justify-center overflow-hidden">
             <motion.div
               key={currentText}
@@ -109,11 +115,12 @@ export default function HeroSection() {
           <video
             ref={videoRef}
             src="/hero-bg-video.mp4"
+            autoPlay
             loop
             muted
             playsInline
             preload="auto"
-            className="w-full h-full object-cover object-center opacity-40 mix-blend-screen"
+            className="w-full h-full object-cover object-center opacity-50 mix-blend-screen"
           />
           {/* Subtle Ambient Backend Architecture Glow & Grids */}
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(0,22,236,0.25),rgba(255,255,255,0))]" />

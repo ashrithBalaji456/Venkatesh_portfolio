@@ -19,11 +19,11 @@ export default function FeaturedVideo({ refForward, ...props }) {
       {...props}
     >
       <img
-        src="/avatar-logo.jpg"
+        src="/venkatesh-photo.png"
         alt="Venkateswarlu Kaki"
-        className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+        className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
         onError={(e) => {
-          e.target.style.display = 'none';
+          e.target.src = '/avatar-logo.jpg';
         }}
       />
       {/* Decorative developer overlay card */}
