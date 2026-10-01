@@ -30,8 +30,8 @@ export default function Home() {
           <Navbar />
           <HeroSection />
 
-          {/* Shared container spanning About and Projects for seamless flowing Blue Ribbon */}
-          <div ref={aboutProjectsRef} className="relative w-full overflow-hidden">
+          {/* Shared container spanning About, Projects, and Education for seamless flowing Blue Ribbon */}
+          <div id="experience-flow" ref={aboutProjectsRef} className="relative w-full overflow-hidden">
             <Skiggle containerRef={aboutProjectsRef} />
 
             <div
@@ -51,9 +51,9 @@ export default function Home() {
             </div>
 
             <Projects />
+            <Education />
           </div>
 
-          <Education />
           <HorizontalScroll />
           <Contact />
           <SiteFooter />
