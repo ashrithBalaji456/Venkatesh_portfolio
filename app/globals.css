@@ -18,17 +18,17 @@
   --color-bg-mid: #9e9fa3;
   --color-bg-dark: #8f9092;
   --color-bg-alt: #b8b9bd;
-  --color-text: #16181f;
-  --color-text-muted: #363942;
-  --color-text-subtle: #4e525d;
+  --color-text: #111317;
+  --color-text-muted: #222631;
+  --color-text-subtle: #383c49;
   --color-accent: #0016ec;
-  --color-accent-soft: #a2a4aa;
-  --color-border: #92949b;
-  --color-btn-dark-bg: #22252e;
-  --color-btn-dark-text: #eef0f5;
-  --color-btn-light-bg: #a8aab0;
-  --color-btn-light-text: #16181f;
-  --color-btn-sm-bg: #a8aab0;
+  --color-accent-soft: #9ea0a8;
+  --color-border: #8e9097;
+  --color-btn-dark-bg: #1c1f26;
+  --color-btn-dark-text: #f0f2f6;
+  --color-btn-light-bg: #a2a4aa;
+  --color-btn-light-text: #111317;
+  --color-btn-sm-bg: #a2a4aa;
 }
 * {
   user-select: none;
@@ -145,17 +145,20 @@ html {
 }
 .about-inline-services__item h4 {
   margin: 0;
-  font-size: 1.2vw;
-  font-weight: 500;
-  letter-spacing: -0.03em;
-  line-height: 1.12;
+  font-size: clamp(1.1rem, 1.35vw, 1.45rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  color: var(--color-text);
 }
 .about-inline-services__item p {
-  margin: 0.5vw 0 0;
-  max-width: 52ch;
-  font-size: 0.85vw;
-  line-height: 1.45;
-  opacity: 0.8;
+  margin: 0.6vw 0 0;
+  max-width: 54ch;
+  font-size: clamp(0.925rem, 1.05vw, 1.15rem);
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+  opacity: 1;
 }
 .pj-head {
   display: flex;
@@ -165,12 +168,14 @@ html {
   border-bottom: 1.5px solid var(--color-border);
   padding-bottom: 2vw;
   margin-bottom: 1vw;
+  overflow: hidden;
 }
 .pj-label {
-  font-size: 0.95vw;
-  letter-spacing: 0.28em;
-  font-weight: 600;
+  font-size: clamp(0.85rem, 0.95vw, 1rem);
+  letter-spacing: 0.25em;
+  font-weight: 700;
   text-transform: uppercase;
+  color: var(--color-text-muted);
 }
 .pj-title {
   font-size: 5vw;
@@ -179,6 +184,7 @@ html {
   line-height: 1;
   margin: 0;
   text-transform: lowercase;
+  will-change: transform;
 }
 .pj-list {
   list-style: none;
@@ -202,11 +208,12 @@ html {
   color: var(--color-accent);
 }
 .pj-num {
-  font-size: 0.95vw;
-  letter-spacing: 0.2em;
-  font-weight: 500;
+  font-size: clamp(0.9rem, 0.95vw, 1.1rem);
+  letter-spacing: 0.15em;
+  font-weight: 700;
   min-width: 4vw;
-  opacity: 0.6;
+  color: var(--color-text-muted);
+  opacity: 0.9;
 }
 .pj-link:hover .pj-num {
   opacity: 1;
@@ -227,32 +234,35 @@ html {
   text-transform: lowercase;
 }
 .pj-role {
-  font-size: 1vw;
-  letter-spacing: 0.18em;
+  font-size: clamp(0.78rem, 0.85vw, 0.95rem);
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  font-weight: 500;
-  opacity: 0.55;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  opacity: 1;
 }
 .pj-link:hover .pj-role {
   opacity: 1;
   color: var(--color-accent);
 }
 .pj-note {
-  font-size: 1vw;
-  font-weight: 400;
-  line-height: 1.4;
-  opacity: 0.7;
+  font-size: clamp(0.9rem, 1vw, 1.1rem);
+  font-weight: 480;
+  line-height: 1.55;
+  color: var(--color-text-muted);
+  opacity: 1;
   max-width: 60ch;
 }
 .pj-link:hover .pj-note {
   opacity: 1;
 }
 .pj-kind {
-  font-size: 0.95vw;
-  letter-spacing: 0.2em;
-  font-weight: 500;
+  font-size: clamp(0.8rem, 0.9vw, 1rem);
+  letter-spacing: 0.18em;
+  font-weight: 600;
   text-transform: uppercase;
-  opacity: 0.6;
+  color: var(--color-text-muted);
+  opacity: 0.9;
   white-space: nowrap;
 }
 .pj-link:hover .pj-kind {

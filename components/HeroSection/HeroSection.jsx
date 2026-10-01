@@ -155,7 +155,7 @@ export default function HeroSection() {
             variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
             className="flex items-center gap-3 mb-2"
           >
-            <span className="text-xs font-semibold tracking-[0.25em] text-fg-muted uppercase">
+            <span className="text-xs font-bold tracking-[0.25em] text-fg uppercase">
               HELLO, I'M VENKATESWARLU
             </span>
             <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
@@ -169,7 +169,7 @@ export default function HeroSection() {
             <span className="text-fg-muted font-bold">SYSTEMS DEVELOPER</span>
           </h1>
 
-          <p className="text-xs sm:text-sm text-fg-muted leading-relaxed mb-8 max-w-[44ch]">
+          <p className="text-sm sm:text-base text-fg font-medium leading-relaxed mb-8 max-w-[46ch]">
             Building robust REST APIs, layered microservices architectures, and high-performance database solutions with PostgreSQL &amp; Spring Data JPA.
           </p>
 

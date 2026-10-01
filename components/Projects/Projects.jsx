@@ -126,6 +126,23 @@ export default function Projects() {
           once: true,
         },
       });
+
+      // Move headings to the right when scrolling down, matching the first heading
+      const heads = sectionRef.current.querySelectorAll(".pj-head");
+      heads.forEach((head) => {
+        const title = head.querySelector(".pj-title");
+        if (!title) return;
+        gsap.to(title, {
+          x: 75,
+          ease: "power1.out",
+          scrollTrigger: {
+            trigger: head,
+            start: "top 95%",
+            end: "bottom 15%",
+            scrub: 0.8,
+          },
+        });
+      });
     }, sectionRef.current);
     return () => ctx.revert();
   }, []);

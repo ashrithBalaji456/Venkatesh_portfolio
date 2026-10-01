@@ -22,7 +22,7 @@ const SERVICES = [
 export default function SubHeader() {
   return (
     <div className='w-full flex flex-col items-start text-left px-4 md:px-0'>
-      <div className='w-full text-base md:text-lg lg:text-xl flex flex-col gap-3 leading-relaxed'>
+      <div className='w-full text-base md:text-lg lg:text-xl flex flex-col gap-3 leading-relaxed text-fg font-medium'>
         <p>Hi, I'm Venkateswarlu Kaki, a Java Backend Developer and Software Engineer based in Hyderabad, India.</p>
         <p>I specialize in building CRUD-based enterprise applications using layered architecture, high-efficiency REST APIs, and resilient data layers powered by Spring Boot and PostgreSQL.</p>
       </div>
