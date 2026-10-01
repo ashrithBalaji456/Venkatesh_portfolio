@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar/Navbar";
 import HeroSection from "@/components/HeroSection/HeroSection";
 import SmoothScroll from "@/components/SmoothScroll";
 import Projects from "@/components/Projects/Projects";
+import Education from "@/components/Education/Education";
 import HorizontalScroll from "@/components/HorizontalScroll/HorizontalScroll";
 import Contact from "@/components/Contact/Contact";
 import SiteFooter from "@/components/SiteFooter/SiteFooter";
@@ -52,6 +53,7 @@ export default function Home() {
             <Projects />
           </div>
 
+          <Education />
           <HorizontalScroll />
           <Contact />
           <SiteFooter />

@@ -14,6 +14,7 @@ const MOBILE_NAV_ITEMS = [
   { label: "HOME", target: "top" },
   { label: "ABOUT", target: "about" },
   { label: "PROJECTS", target: "projects-section" },
+  { label: "EDUCATION", target: "education-section" },
   { label: "CONTACT", target: "contact-section" },
 ];
 
