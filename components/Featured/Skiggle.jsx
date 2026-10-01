@@ -1,31 +1,49 @@
-import React, { useEffect, useRef } from "react";
+"use client";
+import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
-export default function Skiggle() {
+export default function Skiggle({ containerRef }) {
   const pathRef = useRef(null);
-  const { scrollYProgress } = useScroll({ layoutEffect: false });
-  const dashOffset = useTransform(scrollYProgress, [0, 0.3], [-4291, 0]);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start 80%", "end 60%"],
+  });
 
-  useEffect(() => {
-    const path = pathRef.current;
-    if (path) {
-      const length = path.getTotalLength();
-      path.style.strokeDasharray = `${length}`;
-    }
-  }, []);
+  // Draws progressively from About section (0.18) down through Projects section (1.0)
+  const pathLength = useTransform(scrollYProgress, [0, 1], [0.18, 1]);
 
   return (
-    <svg className="squigggle absolute top-[-10%] left-1/2 -translate-x-1/2 w-[120vw] h-full z-0 pointer-events-none opacity-90" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      className="squigggle absolute top-0 left-1/2 -translate-x-1/2 w-[125vw] max-w-[1920px] h-full z-0 pointer-events-none opacity-85"
+      viewBox="-200 0 1950 2480"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      preserveAspectRatio="xMidYMin slice"
+    >
       <motion.path
         ref={pathRef}
-        d="M1588 1052.5C1563.5 1002.5 1503.4 1295.7 1413 1288.5C1300 1279.5 1318.5 976.5 1145.5 942.5C972.5 908.501 1011.5 1109.5 827 1142.5C642.5 1175.5 640.5 963.5 366 804C146.4 676.4 73.1667 792.5 64 866.5C65.5 916.5 106.8 1011.8 260 993C396 976.311 647.5 927.5 677.5 547.5C707.5 167.5 246.5 -47 82.5 66C-81.5 179 -189.5 31.5 -189.5 31.5"
-        style={{ strokeDashoffset: dashOffset, strokeWidth: 50, strokeLinecap: "round" }}
-        stroke="url(#paint0_linear_5_4)"
+        d="M -189.5 31.5 C -189.5 31.5 -81.5 179 82.5 66 C 246.5 -47 707.5 167.5 677.5 547.5 C 647.5 927.5 396 976.3 260 993 C 106.8 1011.8 65.5 916.5 64 866.5 C 73.2 792.5 146.4 676.4 366 804 C 640.5 963.5 642.5 1175.5 827 1142.5 C 1011.5 1109.5 972.5 908.5 1145.5 942.5 C 1318.5 976.5 1300 1279.5 1413 1288.5 C 1503.4 1295.7 1563.5 1002.5 1588 1052.5 C 1615 1115 1530 1230 1380 1310 C 1200 1400 860 1350 650 1445 C 430 1545 235 1710 185 1890 C 130 2070 270 2220 510 2270 C 760 2320 1060 2190 1275 2250 C 1460 2305 1600 2385 1720 2450"
+        style={{
+          pathLength,
+          strokeWidth: 48,
+          strokeLinecap: "round",
+          strokeLinejoin: "round",
+        }}
+        stroke="url(#paint0_linear_ribbon)"
       />
       <defs>
-        <linearGradient id="paint0_linear_5_4" x1="35" y1="-17" x2="605" y2="444" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#0016EC" />
-          <stop offset="1" stopColor="#4A83FF" />
+        <linearGradient
+          id="paint0_linear_ribbon"
+          x1="-100"
+          y1="50"
+          x2="1700"
+          y2="2450"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop offset="0%" stopColor="#0016EC" />
+          <stop offset="35%" stopColor="#1D4ED8" />
+          <stop offset="70%" stopColor="#2563EB" />
+          <stop offset="100%" stopColor="#60A5FA" />
         </linearGradient>
       </defs>
     </svg>

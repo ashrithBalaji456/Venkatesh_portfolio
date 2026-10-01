@@ -14,6 +14,7 @@ import SubHeader from "@/components/Featured/SubHeader";
 
 export default function Home() {
   const ref = useRef(null);
+  const aboutProjectsRef = useRef(null);
 
   return (
     <SmoothScroll>
@@ -28,24 +29,29 @@ export default function Home() {
           <Navbar />
           <HeroSection />
 
-          <div
-            id="about"
-            className="h-auto relative mt-8 md:mt-16 px-6 sm:px-12 lg:px-20 pb-24 z-10 flex flex-col gap-8 md:gap-12 animate-fade-in"
-            ref={ref}
-          >
-            <Skiggle />
-            <Header />
-            <div className="w-full flex flex-col md:flex-row gap-12 lg:gap-16 items-start relative z-10">
-              <div className="w-full md:w-[42%] lg:w-[38%] flex-shrink-0 flex justify-center md:justify-start">
-                <FeaturedVideo refForward={ref} />
-              </div>
-              <div className="w-full md:flex-grow">
-                <SubHeader />
+          {/* Shared container spanning About and Projects for seamless flowing Blue Ribbon */}
+          <div ref={aboutProjectsRef} className="relative w-full overflow-hidden">
+            <Skiggle containerRef={aboutProjectsRef} />
+
+            <div
+              id="about"
+              className="h-auto relative mt-8 md:mt-16 px-6 sm:px-12 lg:px-20 pb-20 z-10 flex flex-col gap-8 md:gap-12 animate-fade-in"
+              ref={ref}
+            >
+              <Header />
+              <div className="w-full flex flex-col md:flex-row gap-12 lg:gap-16 items-start relative z-10">
+                <div className="w-full md:w-[42%] lg:w-[38%] flex-shrink-0 flex justify-center md:justify-start">
+                  <FeaturedVideo refForward={ref} />
+                </div>
+                <div className="w-full md:flex-grow">
+                  <SubHeader />
+                </div>
               </div>
             </div>
+
+            <Projects />
           </div>
 
-          <Projects />
           <HorizontalScroll />
           <Contact />
           <SiteFooter />
