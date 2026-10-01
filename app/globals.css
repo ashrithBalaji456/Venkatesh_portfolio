@@ -13,19 +13,19 @@
 [data-theme="dark"],
 [data-theme="light"] {
   --font-inter: 'Inter', sans-serif;
-  --color-bg: #8e94a0;
-  --color-bg-alt: #9da3af;
-  --color-text: #1a1d24;
-  --color-text-muted: #383c47;
-  --color-text-subtle: #505562;
+  --color-bg: #c8cdd7;
+  --color-bg-alt: #d9dde6;
+  --color-text: #181b22;
+  --color-text-muted: #3d424f;
+  --color-text-subtle: #5a6070;
   --color-accent: #0016ec;
-  --color-accent-soft: #7a8091;
-  --color-border: #757b8a;
-  --color-btn-dark-bg: #262933;
-  --color-btn-dark-text: #dcdfe8;
-  --color-btn-light-bg: #7d8392;
-  --color-btn-light-text: #1a1d24;
-  --color-btn-sm-bg: #7d8392;
+  --color-accent-soft: #b0b6c4;
+  --color-border: #b0b6c4;
+  --color-btn-dark-bg: #252832;
+  --color-btn-dark-text: #eef0f6;
+  --color-btn-light-bg: #b8bdc9;
+  --color-btn-light-text: #181b22;
+  --color-btn-sm-bg: #b8bdc9;
 }
 * {
   user-select: none;

@@ -1,9 +1,8 @@
 "use client";
-import { Suspense, useRef, useEffect } from "react";
+import { Suspense, useRef } from "react";
 import Navbar from "@/components/Navbar/Navbar";
 import HeroSection from "@/components/HeroSection/HeroSection";
 import SmoothScroll from "@/components/SmoothScroll";
-import GradualBlur from "@/components/GradualBlur/GradualBlur";
 import HorizontalScroll from "@/components/HorizontalScroll/HorizontalScroll";
 import Projects from "@/components/Projects/Projects";
 import Contact from "@/components/Contact/Contact";
@@ -12,32 +11,9 @@ import Skiggle from "@/components/Featured/Skiggle";
 import Header from "@/components/Featured/Header";
 import FeaturedVideo from "@/components/Featured/FeaturedVideo";
 import SubHeader from "@/components/Featured/SubHeader";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export default function Home() {
   const ref = useRef(null);
-  const blurRef = useRef(null);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    gsap.registerPlugin(ScrollTrigger);
-    const blur = blurRef.current;
-    const footer = document.getElementById("main-footer");
-    if (!blur || !footer) return;
-
-    const setVisible = (visible) => gsap.to(blur, { autoAlpha: visible ? 1 : 0, duration: 0.3 });
-
-    const updateBlurState = () => {
-      const isAtTop = window.scrollY < 20;
-      const footerInView = footer.getBoundingClientRect().top < window.innerHeight;
-      setVisible(!isAtTop && !footerInView);
-    };
-
-    updateBlurState();
-    window.addEventListener("scroll", updateBlurState);
-    return () => window.removeEventListener("scroll", updateBlurState);
-  }, []);
 
   return (
     <SmoothScroll>
@@ -73,10 +49,6 @@ export default function Home() {
           <HorizontalScroll />
           <Contact />
           <SiteFooter />
-
-          <div ref={blurRef} style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 99999 }}>
-            <GradualBlur position="bottom" height="6rem" strength={2} divCount={6} curve="bezier" opacity={0.9} />
-          </div>
         </div>
       </Suspense>
     </SmoothScroll>

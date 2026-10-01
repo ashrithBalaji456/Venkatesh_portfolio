@@ -88,7 +88,7 @@ export default function HeroSection() {
         id="loader"
         ref={loaderRef}
         style={{
-          backgroundColor: "#8e94a0",
+          backgroundColor: "#c8cdd7",
           zIndex: 100002,
           display: "flex",
           flexDirection: "column",
@@ -134,12 +134,11 @@ export default function HeroSection() {
             muted
             playsInline
             preload="auto"
-            className="w-full h-full object-cover object-center opacity-75 sm:opacity-85 transition-opacity duration-700"
+            className="w-full h-full object-cover object-center opacity-85 transition-opacity duration-700"
           />
-          {/* Subtle Ambient Vignette & Seamless Bottom Blend */}
-          <div className="absolute inset-0 bg-gradient-to-r from-bg/90 via-bg/30 to-bg/50 pointer-events-none" />
-          <div className="absolute inset-0 bg-gradient-to-b from-bg/60 via-transparent to-bg pointer-events-none" />
-          <div className="absolute bottom-0 left-0 right-0 h-40 sm:h-60 bg-gradient-to-t from-bg via-bg/85 to-transparent pointer-events-none" />
+          {/* Subtle Ambient Side Gradient & Crisp Bottom Seam without Milky Blur */}
+          <div className="absolute inset-0 bg-gradient-to-r from-bg/75 via-transparent to-bg/25 pointer-events-none" />
+          <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-bg to-transparent pointer-events-none" />
         </div>
 
         {/* Hero Content */}
