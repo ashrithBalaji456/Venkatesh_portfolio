@@ -88,7 +88,7 @@ export default function HeroSection() {
         id="loader"
         ref={loaderRef}
         style={{
-          backgroundColor: "#1c1e24",
+          backgroundColor: "#8e94a0",
           zIndex: 100002,
           display: "flex",
           flexDirection: "column",

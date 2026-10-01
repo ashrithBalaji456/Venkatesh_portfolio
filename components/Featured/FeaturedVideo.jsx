@@ -15,7 +15,7 @@ export default function FeaturedVideo({ refForward, ...props }) {
       variants={{ initial: { scale: 1 }, animate: { scale: 1.05 } }}
       initial="initial"
       animate={progress > 0.5 ? "animate" : "initial"}
-      className="relative w-full aspect-[3/4] md:aspect-[856/1024] overflow-hidden rounded-3xl shadow-2xl z-30 bg-gradient-to-br from-bg-alt to-[#181d2e] border border-theme-border/60 group"
+      className="relative w-full aspect-[3/4] md:aspect-[856/1024] overflow-hidden rounded-3xl shadow-2xl z-30 bg-bg-alt border border-theme-border group"
       {...props}
     >
       <img

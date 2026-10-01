@@ -86,14 +86,14 @@ const Menu = ({ open, onOutsideClick, onClose }) => {
               <a
                 href="#contact-section"
                 onClick={() => onClose && onClose()}
-                className="flex items-center justify-between bg-fg text-bg rounded-xl px-4 py-3 text-sm tracking-widest font-semibold transition-transform hover:-translate-y-0.5"
+                className="flex items-center justify-between bg-btn-dark-bg text-btn-dark-text border border-theme-border rounded-xl px-4 py-3 text-sm tracking-widest font-semibold transition-transform hover:-translate-y-0.5"
               >
                 <span>GET IN TOUCH</span><span>↗</span>
               </a>
               <a
                 href={`mailto:${EMAIL}`}
                 onClick={() => onClose && onClose()}
-                className="flex items-center justify-between border-2 border-fg text-fg rounded-xl px-4 py-3 text-sm tracking-widest font-semibold hover:bg-accent-soft"
+                className="flex items-center justify-between border border-theme-border bg-bg text-fg rounded-xl px-4 py-3 text-sm tracking-widest font-semibold hover:bg-accent-soft"
               >
                 <span>EMAIL ME</span><span>↗</span>
               </a>

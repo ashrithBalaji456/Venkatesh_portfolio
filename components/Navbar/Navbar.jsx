@@ -97,13 +97,13 @@ export default function Navbar() {
           </nav>
           <div className="mt-auto pt-8 flex flex-col gap-3">
             <p className="text-fg-muted text-xs tracking-[0.2em] uppercase font-semibold">Get in touch</p>
-            <a href={`mailto:${EMAIL}`} onClick={() => setMobileOpen(false)} className="flex items-center justify-between bg-fg text-bg rounded-full px-5 py-4 text-sm font-semibold">
+            <a href={`mailto:${EMAIL}`} onClick={() => setMobileOpen(false)} className="flex items-center justify-between bg-btn-dark-bg text-btn-dark-text border border-theme-border rounded-full px-5 py-4 text-sm font-semibold">
               <span>EMAIL DIRECTLY</span><span>↗</span>
             </a>
-            <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" onClick={() => setMobileOpen(false)} className="flex items-center justify-between border-2 border-fg text-fg rounded-full px-5 py-4 text-sm font-semibold">
+            <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" onClick={() => setMobileOpen(false)} className="flex items-center justify-between border border-theme-border bg-bg-alt text-fg rounded-full px-5 py-4 text-sm font-semibold">
               <span>WHATSAPP CHAT</span><span>↗</span>
             </a>
-            <a href={TELEGRAM_URL} target="_blank" rel="noreferrer" onClick={() => setMobileOpen(false)} className="flex items-center justify-between border-2 border-fg text-fg rounded-full px-5 py-4 text-sm font-semibold">
+            <a href={TELEGRAM_URL} target="_blank" rel="noreferrer" onClick={() => setMobileOpen(false)} className="flex items-center justify-between border border-theme-border bg-bg-alt text-fg rounded-full px-5 py-4 text-sm font-semibold">
               <span>TELEGRAM</span><span>↗</span>
             </a>
           </div>
