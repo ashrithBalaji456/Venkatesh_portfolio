@@ -12,6 +12,8 @@ export default function HeroSection() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentText, setCurrentText] = useState("వెంకటేశ్వర్లు పోర్ట్‌ఫోలియో");
 
+  const [isMuted, setIsMuted] = useState(true);
+
   useEffect(() => {
     if (typeof window === "undefined") return;
     document.body.style.overflow = "hidden";
@@ -32,7 +34,6 @@ export default function HeroSection() {
 
     if (videoRef.current) {
       videoRef.current.muted = true;
-      videoRef.current.volume = 0;
       videoRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
     }
 
@@ -57,8 +58,6 @@ export default function HeroSection() {
 
   const togglePlay = () => {
     if (!videoRef.current) return;
-    videoRef.current.muted = true;
-    videoRef.current.volume = 0;
     if (isPlaying) {
       videoRef.current.pause();
       setIsPlaying(false);
@@ -70,6 +69,18 @@ export default function HeroSection() {
     }
   };
 
+  const toggleSound = () => {
+    if (!videoRef.current) return;
+    const nextMuted = !isMuted;
+    videoRef.current.muted = nextMuted;
+    videoRef.current.volume = nextMuted ? 0 : 1.0;
+    setIsMuted(nextMuted);
+    if (!nextMuted) {
+      videoRef.current.play().catch(() => {});
+      setIsPlaying(true);
+    }
+  };
+
   return (
     <>
       {/* Intro Loader */}
@@ -77,7 +88,7 @@ export default function HeroSection() {
         id="loader"
         ref={loaderRef}
         style={{
-          backgroundColor: "#0A0A0C",
+          backgroundColor: "#131418",
           zIndex: 100002,
           display: "flex",
           flexDirection: "column",
@@ -113,7 +124,7 @@ export default function HeroSection() {
 
       {/* Hero Section */}
       <section id="hero-section" ref={sectionRef} className="relative w-full h-screen min-h-[600px] overflow-hidden select-none bg-bg">
-        {/* Dynamic Background with Seamless Top-to-Bottom Fade */}
+        {/* Dynamic Background with Rich Video Presence & Seamless Blend */}
         <div ref={videoContainerRef} className="absolute inset-0 w-full h-full bg-bg overflow-hidden">
           <video
             ref={videoRef}
@@ -123,12 +134,12 @@ export default function HeroSection() {
             muted
             playsInline
             preload="auto"
-            className="w-full h-full object-cover object-center opacity-35"
+            className="w-full h-full object-cover object-center opacity-75 sm:opacity-85 transition-opacity duration-700"
           />
-          {/* Subtle Ambient Grid & Seamless Vertical Gradient Blends */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] pointer-events-none" />
-          <div className="absolute inset-0 bg-gradient-to-b from-bg/90 via-bg/30 to-bg pointer-events-none" />
-          <div className="absolute bottom-0 left-0 right-0 h-44 sm:h-64 bg-gradient-to-t from-bg via-bg/95 to-transparent pointer-events-none" />
+          {/* Subtle Ambient Vignette & Seamless Bottom Blend */}
+          <div className="absolute inset-0 bg-gradient-to-r from-bg/90 via-bg/30 to-bg/50 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-b from-bg/60 via-transparent to-bg pointer-events-none" />
+          <div className="absolute bottom-0 left-0 right-0 h-40 sm:h-60 bg-gradient-to-t from-bg via-bg/85 to-transparent pointer-events-none" />
         </div>
 
         {/* Hero Content */}
@@ -139,7 +150,7 @@ export default function HeroSection() {
             hidden: { opacity: 0 },
             visible: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.2 } },
           }}
-          className="absolute top-1/2 -translate-y-1/2 left-6 sm:left-12 lg:left-20 z-10 max-w-[560px] p-6 rounded-2xl bg-bg/85 lg:bg-transparent lg:p-0 backdrop-blur-sm lg:backdrop-blur-none"
+          className="absolute top-1/2 -translate-y-1/2 left-6 sm:left-12 lg:left-20 z-10 max-w-[560px] p-6 rounded-2xl bg-bg/75 lg:bg-transparent lg:p-0 backdrop-blur-md lg:backdrop-blur-none"
         >
           <motion.div
             variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
@@ -151,12 +162,12 @@ export default function HeroSection() {
             <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
           </motion.div>
 
-          <div className="w-12 h-[1.5px] bg-fg/20 mb-6" />
+          <div className="w-12 h-[1.5px] bg-fg/30 mb-6" />
 
           <h1 className="text-4xl sm:text-5xl lg:text-[3.2rem] font-black uppercase leading-[1.05] tracking-tight text-fg mb-6">
             JAVA BACKEND <br />
             &amp; SPRING BOOT <br />
-            <span className="text-fg-muted/65 font-bold">SYSTEMS DEVELOPER</span>
+            <span className="text-fg-muted/70 font-bold">SYSTEMS DEVELOPER</span>
           </h1>
 
           <p className="text-xs sm:text-sm text-fg-muted leading-relaxed mb-8 max-w-[44ch]">
@@ -191,16 +202,56 @@ export default function HeroSection() {
           </div>
         </motion.div>
 
-        {/* Sound / Video Controls */}
-        <button
-          onClick={togglePlay}
-          className="absolute bottom-8 right-8 z-20 flex items-center gap-3 bg-bg-alt/90 border border-theme-border px-4 py-2.5 rounded-full text-fg hover:bg-accent hover:text-white transition-all active:scale-95 shadow-lg cursor-pointer"
-        >
-          <span className="text-[11px] font-bold tracking-[0.18em] uppercase pr-2">
-            {isPlaying ? "PAUSE VIDEO" : "PLAY VIDEO"}
-          </span>
-          <span className="w-2 h-2 rounded-full bg-accent animate-ping" />
-        </button>
+        {/* Floating Sound & Video Controls */}
+        <div className="absolute bottom-8 right-6 sm:right-10 z-20 flex items-center gap-3">
+          {/* Sound Toggle Button */}
+          <button
+            type="button"
+            onClick={toggleSound}
+            aria-label={isMuted ? "Unmute video audio" : "Mute video audio"}
+            className={`flex items-center gap-2.5 px-4 py-2.5 rounded-full text-xs font-semibold tracking-wider transition-all shadow-xl active:scale-95 cursor-pointer backdrop-blur-md border ${
+              isMuted
+                ? "bg-bg-alt/90 border-theme-border text-fg hover:bg-accent hover:text-white"
+                : "bg-emerald-600/90 border-emerald-400/50 text-white animate-pulse"
+            }`}
+          >
+            {isMuted ? (
+              <>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                  <line x1="23" y1="9" x2="17" y2="15" />
+                  <line x1="17" y1="9" x2="23" y2="15" />
+                </svg>
+                <span>UNMUTE AUDIO</span>
+              </>
+            ) : (
+              <>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                  <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
+                </svg>
+                <span>AUDIO PLAYING</span>
+                <span className="flex items-center gap-0.5 ml-1">
+                  <span className="w-1 h-3 bg-white rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                  <span className="w-1 h-4 bg-white rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                  <span className="w-1 h-2 bg-white rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                </span>
+              </>
+            )}
+          </button>
+
+          {/* Play/Pause Button */}
+          <button
+            type="button"
+            onClick={togglePlay}
+            aria-label={isPlaying ? "Pause background video" : "Play background video"}
+            className="flex items-center gap-2 bg-bg-alt/90 border border-theme-border px-3.5 py-2.5 rounded-full text-fg hover:bg-accent hover:text-white transition-all active:scale-95 shadow-lg cursor-pointer backdrop-blur-md"
+          >
+            <span className="text-[11px] font-bold tracking-[0.15em] uppercase">
+              {isPlaying ? "PAUSE" : "PLAY"}
+            </span>
+          </button>
+        </div>
       </section>
     </>
   );
