@@ -67,6 +67,17 @@ export default function Contact() {
       </span>
     ));
 
+  const handleEmailClick = (e) => {
+    e.preventDefault();
+    const email = "venkateswarlukaki16@gmail.com";
+    const isMobile = typeof navigator !== "undefined" && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+      window.location.href = `mailto:${email}`;
+    } else {
+      window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${email}`, "_blank", "noopener,noreferrer");
+    }
+  };
+
   return (
     <section id="contact-section" ref={sectionRef}>
       <div id="ct-eyebrow" ref={eyebrowRef}>
@@ -75,11 +86,26 @@ export default function Contact() {
       <h2 id="ct-headline" ref={headlineRef}>
         {splitChars("let's talk.")}
       </h2>
-      <a id="ct-email" href="mailto:venkateswarlukaki16@gmail.com" ref={emailRef}>
+      <a
+        id="ct-email"
+        href="https://mail.google.com/mail/?view=cm&fs=1&to=venkateswarlukaki16@gmail.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={handleEmailClick}
+        ref={emailRef}
+        title="Send email to venkateswarlukaki16@gmail.com"
+      >
         venkateswarlukaki16@gmail.com
       </a>
       <div id="ct-actions" ref={ctaRef}>
-        <a id="ct-btn" href="mailto:venkateswarlukaki16@gmail.com">
+        <a
+          id="ct-btn"
+          href="https://mail.google.com/mail/?view=cm&fs=1&to=venkateswarlukaki16@gmail.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={handleEmailClick}
+          title="Send an email"
+        >
           <span>SEND AN EMAIL</span>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M7 17 17 7m-10 0h10v10" />

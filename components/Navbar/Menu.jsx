@@ -4,8 +4,8 @@ import React, { useEffect, useRef, useState } from "react";
 const EMAIL = "venkateswarlukaki16@gmail.com";
 const WHATSAPP_URL = "https://wa.me/916281537725";
 const TELEGRAM_URL = "https://t.me/+916281537725";
-const LINKEDIN_URL = "https://www.linkedin.com/in/venkateswarlu-kaki";
-const GITHUB_URL = "https://github.com/venkateswarlukaki";
+const LINKEDIN_URL = "https://www.linkedin.com/in/venkateswarlu16/?isSelfProfile=false";
+const GITHUB_URL = "https://github.com/venkateswarlu-maker";
 
 const scrollToSection = (id) => {
   if (typeof window === "undefined") return;
@@ -93,8 +93,19 @@ const Menu = ({ open, onOutsideClick, onClose }) => {
                 <span>GET IN TOUCH</span><span>↗</span>
               </a>
               <a
-                href={`mailto:${EMAIL}`}
-                onClick={() => onClose && onClose()}
+                href={`https://mail.google.com/mail/?view=cm&fs=1&to=${EMAIL}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (onClose) onClose();
+                  const isMobile = typeof navigator !== "undefined" && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+                  if (isMobile) {
+                    window.location.href = `mailto:${EMAIL}`;
+                  } else {
+                    window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${EMAIL}`, "_blank", "noopener,noreferrer");
+                  }
+                }}
                 className="flex items-center justify-between border border-theme-border bg-bg text-fg rounded-xl px-4 py-3 text-sm tracking-widest font-semibold hover:bg-accent-soft"
               >
                 <span>EMAIL ME</span><span>↗</span>

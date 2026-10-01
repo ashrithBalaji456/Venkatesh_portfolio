@@ -99,7 +99,22 @@ export default function Navbar() {
           </nav>
           <div className="mt-auto pt-8 flex flex-col gap-3">
             <p className="text-fg-muted text-xs tracking-[0.2em] uppercase font-semibold">Get in touch</p>
-            <a href={`mailto:${EMAIL}`} onClick={() => setMobileOpen(false)} className="flex items-center justify-between bg-btn-dark-bg text-btn-dark-text border border-theme-border rounded-full px-5 py-4 text-sm font-semibold">
+            <a
+              href={`https://mail.google.com/mail/?view=cm&fs=1&to=${EMAIL}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => {
+                e.preventDefault();
+                setMobileOpen(false);
+                const isMobile = typeof navigator !== "undefined" && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+                if (isMobile) {
+                  window.location.href = `mailto:${EMAIL}`;
+                } else {
+                  window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${EMAIL}`, "_blank", "noopener,noreferrer");
+                }
+              }}
+              className="flex items-center justify-between bg-btn-dark-bg text-btn-dark-text border border-theme-border rounded-full px-5 py-4 text-sm font-semibold"
+            >
               <span>EMAIL DIRECTLY</span><span>↗</span>
             </a>
             <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" onClick={() => setMobileOpen(false)} className="flex items-center justify-between border border-theme-border bg-bg-alt text-fg rounded-full px-5 py-4 text-sm font-semibold">
